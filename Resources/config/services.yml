@@ -1,0 +1,11 @@
+services:
+    dms.filter:
+        class: DMS\Bundle\FilterBundle\Service\Filter
+
+    dms.filter.type_extension:
+        class: DMS\Bundle\FilterBundle\Form\Type\FormTypeFilterExtension
+        arguments:
+            filter: @dms.filter
+            auto_filter: %dms_filter.auto_filter_forms%
+        tags:
+            - { name: form.type_extension, alias: form }
