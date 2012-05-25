@@ -1,6 +1,6 @@
 <?php
 
-namespace Symfony\Component\Form\Tests\Extension\Validator\Type;
+namespace DMS\Bundle\FilterBundle\Tests\Form\Type;
 
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormEvents;
@@ -47,7 +47,7 @@ class FormTypeFilterExtensionTest extends TypeTestCase
         /** @var $form \Symfony\Component\Form\Form */
         $form =  $this->factory->create('form');
 
-        $dispatcher = $this->readAttribute($form, 'dispatcher');
+        $dispatcher = $form->getConfig()->getEventDispatcher();
 
         $listeners = $dispatcher->getListeners(FormEvents::POST_BIND);
 
@@ -69,7 +69,7 @@ class FormTypeFilterExtensionTest extends TypeTestCase
         /** @var $form \Symfony\Component\Form\Form */
         $form =  $this->factory->create('form');
 
-        $dispatcher = $this->readAttribute($form, 'dispatcher');
+        $dispatcher = $form->getConfig()->getEventDispatcher();
 
         $listeners = $dispatcher->getListeners(FormEvents::POST_BIND);
     }
