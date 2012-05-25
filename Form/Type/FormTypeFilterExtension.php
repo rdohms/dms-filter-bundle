@@ -2,7 +2,7 @@
 namespace DMS\Bundle\FilterBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractTypeExtension;
-use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Form\FormBuilderInterface;
 use DMS\Bundle\FilterBundle\Service\Filter;
 use DMS\Bundle\FilterBundle\Form\EventListener\DelegatingFilterListener;
 
@@ -38,7 +38,7 @@ class FormTypeFilterExtension extends AbstractTypeExtension
     /**
      * {@inheritdoc}
      */
-    public function buildForm(FormBuilder $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         if ( ! $this->autoFilter) return;
 
