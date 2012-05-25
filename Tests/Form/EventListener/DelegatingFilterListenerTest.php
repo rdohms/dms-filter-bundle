@@ -127,7 +127,7 @@ class DelegatingFilterListenerTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue(true));
 
         $form->expects($this->once())
-            ->method('getClientData')
+            ->method('getData')
             ->will($this->returnValue(array(1,2,3)));
 
         $this->delegate->expects($this->never())
@@ -146,7 +146,7 @@ class DelegatingFilterListenerTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue(true));
 
         $form->expects($this->once())
-            ->method('getClientData')
+            ->method('getData')
             ->will($this->returnValue($entity));
 
         $this->delegate->expects($this->once())
