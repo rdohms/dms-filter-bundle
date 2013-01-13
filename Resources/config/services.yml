@@ -1,6 +1,13 @@
 services:
+    dms.filter_loader:
+        class: DMS\Filter\Filters\Loader\FilterLoader
+        calls:
+         - [ setContainer,  [@service_container] ]
+
     dms.filter:
         class: DMS\Bundle\FilterBundle\Service\Filter
+        arguments:
+            filter_loader: @dms.filter_loader
 
     dms.filter.type_extension:
         class: DMS\Bundle\FilterBundle\Form\Type\FormTypeFilterExtension
