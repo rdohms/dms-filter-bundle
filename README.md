@@ -89,3 +89,12 @@ Use the `dms.filter` service along with annotations in the Entity to filter data
 ### Auto filtering
 
 This bundle can now automatically filter your forms if it finds a annotated entity attached. If enabled entities will be filtered before they are validated.
+
+## Contributing
+
+Given you have composer, cloned the project repository and have a terminal open on it:
+
+    composer.phar install --prefer-source --dev
+    vendor/bin/phpunit Tests
+
+The tests should be passing and you are ready to make contributions.
