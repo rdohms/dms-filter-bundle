@@ -2,7 +2,7 @@
 
 namespace DMS\Bundle\FilterBundle\Tests\Form\EventListener;
 
-use Symfony\Component\Form\Event\DataEvent;
+use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormBuilder;
 use Symfony\Component\Form\FormError;
@@ -102,7 +102,7 @@ class DelegatingFilterListenerTest extends \PHPUnit_Framework_TestCase
 
     protected function getMockForm()
     {
-        return $this->getMock('Symfony\Component\Form\Tests\FormInterface');
+        return $this->getMock('Symfony\Component\Form\Test\FormInterface');
     }
 
     public function testFilterIgnoresNonRoot()
@@ -115,7 +115,7 @@ class DelegatingFilterListenerTest extends \PHPUnit_Framework_TestCase
         $this->delegate->expects($this->never())
             ->method('filterEntity');
 
-        $this->listener->onPostBind(new DataEvent($form, null));
+        $this->listener->onPostBind(new FormEvent($form, null));
     }
 
     public function testFilterIgnoresNoObject()
@@ -133,7 +133,7 @@ class DelegatingFilterListenerTest extends \PHPUnit_Framework_TestCase
         $this->delegate->expects($this->never())
             ->method('filterEntity');
 
-        $this->listener->onPostBind(new DataEvent($form, null));
+        $this->listener->onPostBind(new FormEvent($form, null));
     }
 
     public function testFilterOnPostBind()
@@ -152,7 +152,7 @@ class DelegatingFilterListenerTest extends \PHPUnit_Framework_TestCase
         $this->delegate->expects($this->once())
             ->method('filterEntity');
 
-        $this->listener->onPostBind(new DataEvent($form, null));
+        $this->listener->onPostBind(new FormEvent($form, null));
     }
 
     public function testAssertEventsBinding()
