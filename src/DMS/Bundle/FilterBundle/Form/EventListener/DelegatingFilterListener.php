@@ -30,7 +30,7 @@ class DelegatingFilterListener implements EventSubscriberInterface
     /**
      * {@inheritdoc}
      */
-    static public function getSubscribedEvents()
+    public static function getSubscribedEvents()
     {
         return array(
             FormEvents::POST_SUBMIT => array("onPostSubmit", 1024),
@@ -46,11 +46,15 @@ class DelegatingFilterListener implements EventSubscriberInterface
     {
         $form = $event->getForm();
 
-        if ( ! $form->isRoot()) return;
+        if (! $form->isRoot()) {
+            return;
+        }
 
         $clientData = $form->getData();
 
-        if ( ! is_object($clientData)) return;
+        if (! is_object($clientData)) {
+            return;
+        }
 
         $this->filterService->filterEntity($clientData);
 

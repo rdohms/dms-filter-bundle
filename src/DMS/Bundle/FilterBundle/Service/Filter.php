@@ -26,7 +26,7 @@ class Filter
     /**
      * Instantiates the Filter Service
      */
-    public function __construct( FilterLoaderInterface $filterLoader )
+    public function __construct(FilterLoaderInterface $filterLoader)
     {
         //Get Doctrine Reader
         $reader = new AnnotationReader();

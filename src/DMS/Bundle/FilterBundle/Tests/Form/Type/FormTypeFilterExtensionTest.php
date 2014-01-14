@@ -2,16 +2,16 @@
 
 namespace DMS\Bundle\FilterBundle\Tests\Form\Type;
 
-use Symfony\Component\Form\FormInterface;
+use DMS\Bundle\FilterBundle\Service\Filter;
 use Symfony\Component\Form\FormEvents;
 use DMS\Bundle\FilterBundle\Tests\Dummy\AnnotatedClass;
 use DMS\Bundle\FilterBundle\Form\FilterExtension;
-use Symfony\Component\Form\Tests\Extension\Core\Type\TypeTestCase;
+use Symfony\Component\Form\Test\TypeTestCase;
 
 class FormTypeFilterExtensionTest extends TypeTestCase
 {
     /**
-     * @var \DMS\Bundle\FilterBundle\Service\Filter
+     * @var Filter | \PHPUnit_Framework_MockObject_MockObject
      */
     protected $filter;
 
@@ -51,10 +51,9 @@ class FormTypeFilterExtensionTest extends TypeTestCase
 
         $dispatcher = $form->getConfig()->getEventDispatcher();
 
-        $listeners = $dispatcher->getListeners(FormEvents::POST_BIND);
+        $listeners = $dispatcher->getListeners(FormEvents::POST_SUBMIT);
 
-        $filter = function($value){
-
+        $filter = function ($value) {
             return (get_class($value[0]) == "DMS\Bundle\FilterBundle\Form\EventListener\DelegatingFilterListener");
         };
 
@@ -73,7 +72,7 @@ class FormTypeFilterExtensionTest extends TypeTestCase
 
         $dispatcher = $form->getConfig()->getEventDispatcher();
 
-        $listeners = $dispatcher->getListeners(FormEvents::POST_BIND);
+        $listeners = $dispatcher->getListeners(FormEvents::POST_SUBMIT);
     }
 
     public function testBindValidatesData()
@@ -87,6 +86,6 @@ class FormTypeFilterExtensionTest extends TypeTestCase
             ->method('filterEntity');
 
         // specific data is irrelevant
-        $form->bind(array());
+        $form->submit(array());
     }
 }

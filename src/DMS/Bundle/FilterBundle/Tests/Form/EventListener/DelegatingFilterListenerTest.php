@@ -2,28 +2,30 @@
 
 namespace DMS\Bundle\FilterBundle\Tests\Form\EventListener;
 
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormInterface;
-use Symfony\Component\Form\FormBuilder;
-use Symfony\Component\Form\FormError;
-use Symfony\Component\Form\Util\PropertyPath;
 use DMS\Bundle\FilterBundle\Form\EventListener\DelegatingFilterListener;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormBuilder;
 use DMS\Bundle\FilterBundle\Service\Filter;
 use DMS\Bundle\FilterBundle\Tests\Dummy\AnnotatedClass;
 use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\PropertyAccess\PropertyPath;
 
 class DelegatingFilterListenerTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @var EventDispatcherInterface | \PHPUnit_Framework_MockObject_MockObject
+     */
     private $dispatcher;
 
+    /**
+     * @var FormFactoryInterface | \PHPUnit_Framework_MockObject_MockObject
+     */
     private $factory;
 
-    private $filterLoader;
-
-    private $builder;
-
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject | Filter
+     * @var Filter | \PHPUnit_Framework_MockObject_MockObject
      */
     private $delegate;
 
@@ -32,8 +34,14 @@ class DelegatingFilterListenerTest extends \PHPUnit_Framework_TestCase
      */
     private $listener;
 
+    /**
+     * @var string
+     */
     private $message;
 
+    /**
+     * @var array
+     */
     private $params;
 
     protected function setUp()
@@ -44,9 +52,8 @@ class DelegatingFilterListenerTest extends \PHPUnit_Framework_TestCase
 
         $this->dispatcher   = $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
         $this->factory      = $this->getMock('Symfony\Component\Form\FormFactoryInterface');
-        $this->filterLoader = $this->getMock('DMS\Filter\Filters\Loader\FilterLoaderInterface');
         $this->delegate     = $this->getMockBuilder('DMS\Bundle\FilterBundle\Service\Filter')
-                                   ->setConstructorArgs(array($this->filterLoader))
+                                   ->disableOriginalConstructor()
                                    ->getMock();
         $this->listener     = new DelegatingFilterListener($this->delegate);
 
@@ -54,45 +61,9 @@ class DelegatingFilterListenerTest extends \PHPUnit_Framework_TestCase
         $this->params = array('foo' => 'bar');
     }
 
-    protected function getMockGraphWalker()
-    {
-        return $this->getMockBuilder('Symfony\Component\Validator\GraphWalker')
-            ->disableOriginalConstructor()
-            ->getMock();
-    }
-
-    protected function getMockMetadataFactory()
-    {
-        return $this->getMock('Symfony\Component\Validator\Mapping\ClassMetadataFactoryInterface');
-    }
-
-    protected function getMockTransformer()
-    {
-        return $this->getMock('Symfony\Component\Form\DataTransformerInterface', array(), array(), '', false, false);
-    }
-
-    protected function getExecutionContext($propertyPath = null)
-    {
-        $graphWalker = $this->getMockGraphWalker();
-        $metadataFactory = $this->getMockMetadataFactory();
-        $globalContext = new GlobalExecutionContext('Root', $graphWalker, $metadataFactory);
-
-        return new ExecutionContext($globalContext, null, $propertyPath, null, null, null);
-    }
-
-    protected function getConstraintViolation($propertyPath)
-    {
-        return new ConstraintViolation($this->message, $this->params, null, $propertyPath, null);
-    }
-
-    protected function getFormError()
-    {
-        return new FormError($this->message, $this->params);
-    }
-
     protected function getBuilder($name = 'name', $propertyPath = null)
     {
-        $builder = new FormBuilder($name, $this->factory, $this->dispatcher);
+        $builder = new FormBuilder($name, '', $this->dispatcher, $this->factory);
         $builder->setAttribute('property_path', new PropertyPath($propertyPath ?: $name));
         $builder->setAttribute('error_mapping', array());
         $builder->setErrorBubbling(false);
@@ -164,6 +135,6 @@ class DelegatingFilterListenerTest extends \PHPUnit_Framework_TestCase
     {
         $bindedEvents = $this->listener->getSubscribedEvents();
 
-        $this->assertArrayHasKey(FormEvents::POST_BIND, $bindedEvents);
+        $this->assertArrayHasKey(FormEvents::POST_SUBMIT, $bindedEvents);
     }
 }
