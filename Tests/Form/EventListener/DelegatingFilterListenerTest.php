@@ -18,6 +18,8 @@ class DelegatingFilterListenerTest extends \PHPUnit_Framework_TestCase
 
     private $factory;
 
+    private $filterLoader;
+
     private $builder;
 
     /**
@@ -40,10 +42,13 @@ class DelegatingFilterListenerTest extends \PHPUnit_Framework_TestCase
             $this->markTestSkipped('The "EventDispatcher" component is not available');
         }
 
-        $this->dispatcher = $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
-        $this->factory = $this->getMock('Symfony\Component\Form\FormFactoryInterface');
-        $this->delegate = $this->getMock('DMS\Bundle\FilterBundle\Service\Filter');
-        $this->listener = new DelegatingFilterListener($this->delegate);
+        $this->dispatcher   = $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
+        $this->factory      = $this->getMock('Symfony\Component\Form\FormFactoryInterface');
+        $this->filterLoader = $this->getMock('DMS\Filter\Filters\Loader\FilterLoaderInterface');
+        $this->delegate     = $this->getMockBuilder('DMS\Bundle\FilterBundle\Service\Filter')
+                                   ->setConstructorArgs(array($this->filterLoader))
+                                   ->getMock();
+        $this->listener     = new DelegatingFilterListener($this->delegate);
 
         $this->message = 'Message';
         $this->params = array('foo' => 'bar');
@@ -115,7 +120,7 @@ class DelegatingFilterListenerTest extends \PHPUnit_Framework_TestCase
         $this->delegate->expects($this->never())
             ->method('filterEntity');
 
-        $this->listener->onPostBind(new FormEvent($form, null));
+        $this->listener->onPostSubmit(new FormEvent($form, null));
     }
 
     public function testFilterIgnoresNoObject()
@@ -133,7 +138,7 @@ class DelegatingFilterListenerTest extends \PHPUnit_Framework_TestCase
         $this->delegate->expects($this->never())
             ->method('filterEntity');
 
-        $this->listener->onPostBind(new FormEvent($form, null));
+        $this->listener->onPostSubmit(new FormEvent($form, null));
     }
 
     public function testFilterOnPostBind()
@@ -152,7 +157,7 @@ class DelegatingFilterListenerTest extends \PHPUnit_Framework_TestCase
         $this->delegate->expects($this->once())
             ->method('filterEntity');
 
-        $this->listener->onPostBind(new FormEvent($form, null));
+        $this->listener->onPostSubmit(new FormEvent($form, null));
     }
 
     public function testAssertEventsBinding()

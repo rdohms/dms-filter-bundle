@@ -2,6 +2,11 @@
 
 namespace DMS\Bundle\FilterBundle\Service;
 
+use DMS\Filter\Filters\Loader\FilterLoaderInterface;
+use DMS\Filter\Mapping\ClassMetadataFactory;
+use DMS\Filter\Mapping\Loader\AnnotationLoader;
+use Doctrine\Common\Annotations\AnnotationReader;
+
 /**
  * Filter Service
  *
@@ -21,20 +26,20 @@ class Filter
     /**
      * Instantiates the Filter Service
      */
-    public function __construct()
+    public function __construct( FilterLoaderInterface $filterLoader )
     {
         //Get Doctrine Reader
-        $reader = new \Doctrine\Common\Annotations\AnnotationReader();
+        $reader = new AnnotationReader();
 
         //Load AnnotationLoader
-        $loader = new \DMS\Filter\Mapping\Loader\AnnotationLoader($reader);
+        $loader = new AnnotationLoader($reader);
         $this->loader = $loader;
 
         //Get a MetadataFactory
-        $metadataFactory = new \DMS\Filter\Mapping\ClassMetadataFactory($loader);
+        $metadataFactory = new ClassMetadataFactory($loader);
 
         //Get a Filter
-        $this->filterExecutor = new \DMS\Filter\Filter($metadataFactory);
+        $this->filterExecutor = new \DMS\Filter\Filter($metadataFactory, $filterLoader);
     }
 
     /**

@@ -22,7 +22,9 @@ class FormTypeFilterExtensionTest extends TypeTestCase
 
     protected function setUp()
     {
-        $this->filter = $this->getMock('DMS\Bundle\FilterBundle\Service\Filter');
+        $filterLoader = $this->getMock('DMS\Filter\Filters\Loader\FilterLoaderInterface');
+        $this->filter = $this->getMockBuilder('DMS\Bundle\FilterBundle\Service\Filter')
+                             ->setConstructorArgs(array($filterLoader))->getMock();
 
         parent::setUp();
     }

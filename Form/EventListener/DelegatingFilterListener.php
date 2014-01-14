@@ -1,8 +1,8 @@
 <?php
 namespace DMS\Bundle\FilterBundle\Form\EventListener;
 
+use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
-use Symfony\Component\Form\Event\FilterDataEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use DMS\Bundle\FilterBundle\Service\Filter;
 
@@ -33,22 +33,22 @@ class DelegatingFilterListener implements EventSubscriberInterface
     static public function getSubscribedEvents()
     {
         return array(
-            FormEvents::POST_BIND => array("onPostBind", 1024),
+            FormEvents::POST_SUBMIT => array("onPostSubmit", 1024),
         );
     }
 
     /**
      * Listens to the Post Bind event and triggers filtering if adequate.
      *
-     * @param FilterDataEvent $event
+     * @param FormEvent $event
      */
-    public function onPostBind($event)
+    public function onPostSubmit(FormEvent $event)
     {
         $form = $event->getForm();
 
         if ( ! $form->isRoot()) return;
 
-        $clientData = $event->getForm()->getData();
+        $clientData = $form->getData();
 
         if ( ! is_object($clientData)) return;
 
