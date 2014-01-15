@@ -2,6 +2,8 @@
 
 This bundle makes DMS/Filter available for use in your application for input filtering.
 
+Current Status: [![Build Status](https://travis-ci.org/rdohms/dms-filter-bundle.png?branch=2.dev)](https://travis-ci.org/rdohms/dms-filter-bundle) [![Dependency Status](https://www.versioneye.com/php/dms:dms-filter-bundle/1.1.1/badge.png)](https://www.versioneye.com/php/dms:dms-filter-bundle/1.1.1)
+
 ## Install
 
 ### 1. Import libraries
