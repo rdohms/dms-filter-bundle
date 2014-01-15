@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "93e06b14247d996fe70b196191634d3e",
+    "hash": "5f650d72f622d35061f6cebadc234f55",
     "packages": [
         {
             "name": "dms/dms-filter",
