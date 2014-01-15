@@ -3,11 +3,13 @@
 namespace DMS\Bundle\FilterBundle\Tests\Dummy;
 
 use DMS\Filter\Rules as Filter;
+use DMS\Bundle\FilterBundle\Rule as SfFilter;
 
 class AnnotatedClass
 {
     /**
      * @Filter\StripTags()
+     * @Filter\Alpha()
      *
      * @var string
      */
@@ -26,5 +28,12 @@ class AnnotatedClass
      * @var string
      */
     public $description;
+
+    /**
+     * @var string
+     *
+     * @SfFilter\Service(service="dms.sample", method="filterIt")
+     */
+    public $serviceFiltered;
 
 }

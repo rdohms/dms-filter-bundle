@@ -1,6 +1,6 @@
 services:
     dms.filter_loader:
-        class: DMS\Filter\Filters\Loader\FilterLoader
+        class: DMS\Bundle\FilterBundle\Loader\ContainerAwareLoader
         calls:
          - [ setContainer,  [@service_container] ]
 

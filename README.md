@@ -87,6 +87,38 @@ public function indexAction()
 
 This bundle can now automatically filter your forms if it finds a annotated entity attached. If enabled entities will be filtered before they are validated.
 
+## Service based method
+
+If you need to filter content using a method in a service, you do not need to create your own Annotations, you can
+simply use the Service Filter, designed specifically for Symfony Services.
+
+See below the usage example of the annotation, it takes 2 options: `service` and `method`.
+
+```php
+<?php
+
+namespace App\Entity;
+
+//Import Annotations
+use DMS\Filter\Rules as Filter;
+
+//Import Symfony Rules
+use DMS\Bundle\FilterBundle\Rule as SfFilter;
+
+class User
+{
+    /**
+    * @Filter\StripTags()
+    * @SfFilter\Service(service="dms.sample", method="filterIt")
+    *
+    * @var string
+    */
+    public $name;
+}
+```
+
+The `filterIt` method can have any name, but it must take one paramter (the value) and return the filtered value.
+
 ## Contributing
 
 Given you have composer, cloned the project repository and have a terminal open on it:

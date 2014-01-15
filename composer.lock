@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "1f4b02ff218d96ed1577505561537daf",
+    "hash": "93e06b14247d996fe70b196191634d3e",
     "packages": [
         {
             "name": "dms/dms-filter",
@@ -11,12 +11,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/rdohms/dms-filter.git",
-                "reference": "ce3d5ef54cce03b4d0cf6288238fdeb5de469f23"
+                "reference": "900b52e3a82782a25e5dc816714b2129acb9d975"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rdohms/dms-filter/zipball/ce3d5ef54cce03b4d0cf6288238fdeb5de469f23",
-                "reference": "ce3d5ef54cce03b4d0cf6288238fdeb5de469f23",
+                "url": "https://api.github.com/repos/rdohms/dms-filter/zipball/900b52e3a82782a25e5dc816714b2129acb9d975",
+                "reference": "900b52e3a82782a25e5dc816714b2129acb9d975",
                 "shasum": ""
             },
             "require": {
@@ -25,7 +25,7 @@
             },
             "require-dev": {
                 "doctrine/cache": "~1.3",
-                "phpunit/phpunit": "~3"
+                "phpunit/phpunit": "~3.7"
             },
             "type": "library",
             "autoload": {
@@ -52,7 +52,7 @@
                 "dms",
                 "filter"
             ],
-            "time": "2014-01-14 14:32:22"
+            "time": "2014-01-14 16:42:42"
         },
         {
             "name": "doctrine/annotations",
