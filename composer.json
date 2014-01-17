@@ -15,7 +15,7 @@
 
     "require": {
         "php":  ">=5.3.2",
-        "dms/dms-filter": "dev-2.dev@dev"
+        "dms/dms-filter": "~2.0"
     },
 
     "require-dev": {
