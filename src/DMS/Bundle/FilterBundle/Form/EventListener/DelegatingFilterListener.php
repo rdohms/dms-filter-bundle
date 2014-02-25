@@ -56,7 +56,32 @@ class DelegatingFilterListener implements EventSubscriberInterface
             return;
         }
 
-        $this->filterService->filterEntity($clientData);
+        // now check children to see if we need to filter embedded entities
+        $getChildEntities = function($form) use (&$getChildEntities) {
 
+            $entities = array();
+            $children = $form->getChildren();
+
+            foreach ($children as $child) {
+                $childData = $child->getData();
+
+                if (is_object($childData)) {
+                    $entities[] = $childData;
+
+                    if ($child->hasChildren()) {
+                        $entities = array_merge($entities, $getChildEntities($child));
+                    }
+                }
+            }
+
+            return $entities;
+        };
+
+        $entitiesToFilter = array_merge(array($clientData), $getChildEntities($form));
+
+        foreach ($entitiesToFilter as $entityToFilter) {
+            $this->filterService->filterEntity($entityToFilter);
+        }
     }
+
 }
