@@ -89,6 +89,28 @@ public function indexAction()
 
 This bundle can now automatically filter your forms if it finds a annotated entity attached. If enabled entities will be filtered before they are validated.
 
+### Cascade Filtering
+
+This Bundle automatically cascades filtering into all embedded forms that return valid entities. If you wish child
+entities to be ignored, set the `cascade_filter` option on the form to false.
+
+
+```php
+class TaskType extends AbstractType
+{
+    // ...
+
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $resolver->setDefaults(array(
+                'cascade_filter' => false,
+            ));
+    }
+
+    // ...
+}
+```
+
 ## Service based method
 
 If you need to filter content using a method in a service, you do not need to create your own Annotations, you can

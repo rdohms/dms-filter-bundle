@@ -81,14 +81,73 @@ class DelegatingFilterListenerTest extends \PHPUnit_Framework_TestCase
         return $this->getMock('Symfony\Component\Form\Test\FormInterface');
     }
 
-    public function testFilterIgnoresNonRoot()
+    public function testFilterIgnoresNonRootWithCascadeOff()
     {
         $form = $this->getMockForm();
-        $form->expects($this->once())
+        $parentForm = $this->getMockForm();
+        $config = $this->getMock('Symfony\Component\Form\FormConfigInterface');
+
+        $form->expects($this->exactly(2))
             ->method('isRoot')
             ->will($this->returnValue(false));
 
+        $form->expects($this->once())
+            ->method('getParent')
+            ->will($this->returnValue($parentForm));
+
+        $form->expects($this->never())
+            ->method('getData');
+
+        $parentForm->expects($this->once())
+            ->method('isRoot')
+            ->will($this->returnValue(true));
+
+        $parentForm->expects($this->once())
+            ->method('getConfig')
+            ->will($this->returnValue($config));
+
+        $config->expects($this->once())
+            ->method('getOption')
+            ->will($this->returnValue(false));
+
         $this->delegate->expects($this->never())
+            ->method('filterEntity');
+
+        $this->listener->onPostSubmit(new FormEvent($form, null));
+    }
+
+    public function testFilterFiltersNonRootWithCascadeOn()
+    {
+        $entity = new AnnotatedClass();
+        $form = $this->getMockForm();
+        $parentForm = $this->getMockForm();
+        $config = $this->getMock('Symfony\Component\Form\FormConfigInterface');
+
+        $form->expects($this->exactly(2))
+            ->method('isRoot')
+            ->will($this->returnValue(false));
+
+        $form->expects($this->once())
+            ->method('getParent')
+            ->will($this->returnValue($parentForm));
+
+        $form->expects($this->once())
+            ->method('getData')
+            ->will($this->returnValue($entity));
+
+        $parentForm->expects($this->once())
+            ->method('isRoot')
+            ->will($this->returnValue(true));
+
+        $parentForm->expects($this->once())
+            ->method('getConfig')
+            ->will($this->returnValue($config));
+
+        $config->expects($this->once())
+            ->method('getOption')
+            ->will($this->returnValue(true));
+
+        $this->delegate->expects($this->once())
             ->method('filterEntity');
 
         $this->listener->onPostSubmit(new FormEvent($form, null));

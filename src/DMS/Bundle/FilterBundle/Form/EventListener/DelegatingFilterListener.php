@@ -5,6 +5,7 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use DMS\Bundle\FilterBundle\Service\Filter;
+use Symfony\Component\Form\FormInterface;
 
 /**
  * Delegating Filter Listener
@@ -40,13 +41,18 @@ class DelegatingFilterListener implements EventSubscriberInterface
     /**
      * Listens to the Post Bind event and triggers filtering if adequate.
      *
+     * POST_SUBMIT is fired for every level of the form, from fields to
+     * embedded forms. this method will filter any level that returns an
+     * entity, or will only filter the root entity if 'cascade_filter'
+     * is set to false.
+     *
      * @param FormEvent $event
      */
     public function onPostSubmit(FormEvent $event)
     {
         $form = $event->getForm();
 
-        if (! $form->isRoot()) {
+        if (! $form->isRoot() && ! $this->getRootFormCascadeOption($form)) {
             return;
         }
 
@@ -56,32 +62,21 @@ class DelegatingFilterListener implements EventSubscriberInterface
             return;
         }
 
-        // now check children to see if we need to filter embedded entities
-        $getChildEntities = function($form) use (&$getChildEntities) {
-
-            $entities = array();
-            $children = $form->getChildren();
-
-            foreach ($children as $child) {
-                $childData = $child->getData();
-
-                if (is_object($childData)) {
-                    $entities[] = $childData;
-
-                    if ($child->hasChildren()) {
-                        $entities = array_merge($entities, $getChildEntities($child));
-                    }
-                }
-            }
-
-            return $entities;
-        };
-
-        $entitiesToFilter = array_merge(array($clientData), $getChildEntities($form));
-
-        foreach ($entitiesToFilter as $entityToFilter) {
-            $this->filterService->filterEntity($entityToFilter);
-        }
+        $this->filterService->filterEntity($clientData);
     }
 
+    /**
+     * Navigates to the Root form to define if cascading should be done.
+     *
+     * @param FormInterface $form
+     * @return boolean
+     */
+    public function getRootFormCascadeOption(FormInterface $form)
+    {
+        if (! $form->isRoot()) {
+            return $this->getRootFormCascadeOption($form->getParent());
+        }
+
+        return $form->getConfig()->getOption('cascade_filter', false);
+    }
 }
