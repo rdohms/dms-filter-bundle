@@ -1,13 +1,14 @@
+parameters:
+    dms.filter.mapping.loader.class: DMS\Filter\Mapping\Loader\AnnotationLoader
+    dms.filter.mapping.factory.class: DMS\Filter\Mapping\ClassMetadataFactory
+    dms.filter.inner.filter.class: DMS\Filter\Filter
+
 services:
-    dms.filter_loader:
-        class: DMS\Bundle\FilterBundle\Loader\ContainerAwareLoader
-        calls:
-         - [ setContainer,  [@service_container] ]
 
     dms.filter:
         class: DMS\Bundle\FilterBundle\Service\Filter
         arguments:
-            filter_loader: @dms.filter_loader
+            - @dms.filter.inner.filter
 
     dms.filter.type_extension:
         class: DMS\Bundle\FilterBundle\Form\Type\FormTypeFilterExtension
@@ -16,3 +17,24 @@ services:
             auto_filter: %dms_filter.auto_filter_forms%
         tags:
             - { name: form.type_extension, alias: form }
+
+    dms.filter.container_loader:
+        class: DMS\Bundle\FilterBundle\Loader\ContainerAwareLoader
+        calls:
+         - [ setContainer,  [@service_container] ]
+
+    dms.filter.mapping.loader:
+        class: %dms.filter.mapping.loader.class%
+        arguments:
+            - @annotation_reader
+
+    dms.filter.mapping.factory:
+        class: %dms.filter.mapping.factory.class%
+        arguments:
+            - @dms.filter.mapping.loader
+
+    dms.filter.inner.filter:
+        class: %dms.filter.inner.filter.class%
+        arguments:
+            - @dms.filter.mapping.factory
+            - @dms.filter.container_loader
