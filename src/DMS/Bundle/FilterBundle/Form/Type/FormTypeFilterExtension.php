@@ -5,6 +5,7 @@ use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\FormBuilderInterface;
 use DMS\Bundle\FilterBundle\Service\Filter;
 use DMS\Bundle\FilterBundle\Form\EventListener\DelegatingFilterListener;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * Form Type Filter Extension
@@ -40,9 +41,21 @@ class FormTypeFilterExtension extends AbstractTypeExtension
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        if ( ! $this->autoFilter) return;
+        if (! $this->autoFilter) {
+            return;
+        }
 
         $builder->addEventSubscriber(new DelegatingFilterListener($this->filterService));
+    }
+
+    /**
+     * @param OptionsResolverInterface $resolver
+     */
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $resolver->setDefaults(array(
+                'cascade_filter' => true
+            ));
     }
 
     /**

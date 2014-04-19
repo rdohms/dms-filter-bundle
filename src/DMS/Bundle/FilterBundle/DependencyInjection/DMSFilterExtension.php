@@ -2,6 +2,7 @@
 
 namespace DMS\Bundle\FilterBundle\DependencyInjection;
 
+use Doctrine\Common\Annotations\AnnotationRegistry;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
@@ -26,5 +27,7 @@ class DMSFilterExtension extends Extension
         $loader->load('services.yml');
 
         $container->setParameter('dms_filter.auto_filter_forms', $config['auto_filter_forms']);
+
+        AnnotationRegistry::registerAutoloadNamespace('DMS\Bundle\FilterBundle\Rule', __DIR__ . '/../../../');
     }
 }
