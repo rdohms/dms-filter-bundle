@@ -38,3 +38,8 @@ services:
         arguments:
             - @dms.filter.mapping.factory
             - @dms.filter.container_loader
+
+    dms.filter.container_filter:
+        class: DMS\Bundle\FilterBundle\Filter\ContainerFilter
+        calls:
+            - [setContainer, [@service_container]]
