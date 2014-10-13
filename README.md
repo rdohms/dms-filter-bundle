@@ -10,7 +10,7 @@ Current Status: [![Build Status](https://travis-ci.org/rdohms/dms-filter-bundle.
 
 Option A) Use Composer.
 
-    composer require dms/dms-filter-bundle:~2.0
+    composer require dms/dms-filter-bundle
 
 ### 2. Enable Bundle
 
