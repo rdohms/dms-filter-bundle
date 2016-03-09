@@ -35,5 +35,4 @@ class AnnotatedClass
      * @SfFilter\Service(service="dms.sample", method="filterIt")
      */
     public $serviceFiltered;
-
 }
