@@ -1,35 +1,18 @@
 language: php
 
 php:
-    - 5.3
-    - 5.4
-    - 5.5
     - 5.6
     - 7.0
-    - hhvm
 
 before_script:
   - composer self-update
   - composer install --dev
-  - composer require symfony/symfony:${SYMFONY_VERSION} --dev --prefer-source
+  - if [ "$SYMFONY_VERSION" != "" ]; then composer require "symfony/symfony:${SYMFONY_VERSION}" --no-update && composer update --dev; fi;
 
 script: phpunit
 
 matrix:
-  allow_failures:
-    - php: hhvm
-    - env: SYMFONY_VERSION=dev-master@dev
-    
-matrix:
   include:
-    - php: 5.3
-      env: SYMFONY_VERSION=2.3.*
-    - php: 5.4
-      env: SYMFONY_VERSION=2.3.*
-    - php: 5.5
-      env: SYMFONY_VERSION=2.3.*
-    - php: 5.6
-      env: SYMFONY_VERSION=2.3.*
     - php: 5.6
       env: SYMFONY_VERSION=2.8.*
     - php: 5.6
@@ -39,5 +22,4 @@ matrix:
     - php: 7
       env: SYMFONY_VERSION=dev-master@dev
   allow_failures:
-    - php: hhvm
     - env: SYMFONY_VERSION=dev-master@dev
