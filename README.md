@@ -146,7 +146,7 @@ The `filterIt` method can have any name, but it must take one paramter (the valu
 ## Compatibility
 
 This is compatible with Symfony 2.8 and above, including 3.0.
-For Symfotn 2.3+ support use "^2.0".
+For Symfony 2.3+ support use "^2.0".
 
 ## Contributing
 
