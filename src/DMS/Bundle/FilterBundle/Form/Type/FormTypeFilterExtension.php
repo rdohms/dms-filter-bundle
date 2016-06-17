@@ -2,6 +2,7 @@
 namespace DMS\Bundle\FilterBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractTypeExtension;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\FormBuilderInterface;
 use DMS\Bundle\FilterBundle\Service\Filter;
 use DMS\Bundle\FilterBundle\Form\EventListener\DelegatingFilterListener;
@@ -63,6 +64,6 @@ class FormTypeFilterExtension extends AbstractTypeExtension
      */
     public function getExtendedType()
     {
-        return 'form';
+        return FormType::class;
     }
 }

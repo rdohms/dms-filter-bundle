@@ -3,7 +3,6 @@
 
 namespace DMS\Bundle\FilterBundle\Tests\Loader;
 
-
 use DMS\Bundle\FilterBundle\Loader\ContainerAwareLoader;
 use DMS\Filter\Rules\StripTags;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -49,5 +48,4 @@ class ContainerAwareLoaderTest extends \PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf('\DMS\Filter\Filters\StripTags', $filter);
     }
-
 }

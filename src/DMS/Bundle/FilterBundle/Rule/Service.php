@@ -38,6 +38,4 @@ class Service extends Rule
     {
         return 'dms.filter.container_filter';
     }
-
-
 }

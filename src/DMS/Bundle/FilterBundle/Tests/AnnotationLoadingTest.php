@@ -51,7 +51,6 @@ class AnnotationLoadingTest extends \PHPUnit_Framework_TestCase
         /** @var $rule StripTags */
         $rule = \array_shift($rules);
         $this->assertEquals('<b><i>', $rule->allowed);
-
     }
 
     protected function assertRules($count, $expectedRules, $rules)

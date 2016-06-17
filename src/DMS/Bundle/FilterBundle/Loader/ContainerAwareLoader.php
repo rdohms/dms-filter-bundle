@@ -39,5 +39,4 @@ class ContainerAwareLoader extends FilterLoader implements ContainerAwareInterfa
 
         return $this->container->get($filterIdentifier);
     }
-
 }
