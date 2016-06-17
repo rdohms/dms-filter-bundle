@@ -8,38 +8,38 @@ services:
     dms.filter:
         class: DMS\Bundle\FilterBundle\Service\Filter
         arguments:
-            - @dms.filter.inner.filter
+            - '@dms.filter.inner.filter'
 
     dms.filter.type_extension:
         class: DMS\Bundle\FilterBundle\Form\Type\FormTypeFilterExtension
         arguments:
-            filter: @dms.filter
-            auto_filter: %dms_filter.auto_filter_forms%
+            filter: '@dms.filter'
+            auto_filter: '%dms_filter.auto_filter_forms%'
         tags:
             - { name: form.type_extension, alias: form }
 
     dms.filter.container_loader:
         class: DMS\Bundle\FilterBundle\Loader\ContainerAwareLoader
         calls:
-         - [ setContainer,  [@service_container] ]
+         - [ setContainer,  ['@service_container'] ]
 
     dms.filter.mapping.loader:
-        class: %dms.filter.mapping.loader.class%
+        class: '%dms.filter.mapping.loader.class%'
         arguments:
-            - @annotation_reader
+            - '@annotation_reader'
 
     dms.filter.mapping.factory:
-        class: %dms.filter.mapping.factory.class%
+        class: '%dms.filter.mapping.factory.class%'
         arguments:
-            - @dms.filter.mapping.loader
+            - '@dms.filter.mapping.loader'
 
     dms.filter.inner.filter:
-        class: %dms.filter.inner.filter.class%
+        class: '%dms.filter.inner.filter.class%'
         arguments:
-            - @dms.filter.mapping.factory
-            - @dms.filter.container_loader
+            - '@dms.filter.mapping.factory'
+            - '@dms.filter.container_loader'
 
     dms.filter.container_filter:
         class: DMS\Bundle\FilterBundle\Filter\ContainerFilter
         calls:
-            - [setContainer, [@service_container]]
+            - [setContainer, ['@service_container']]
