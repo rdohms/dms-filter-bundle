@@ -6,6 +6,7 @@ use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\FormBuilderInterface;
 use DMS\Bundle\FilterBundle\Service\Filter;
 use DMS\Bundle\FilterBundle\Form\EventListener\DelegatingFilterListener;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
@@ -57,6 +58,16 @@ class FormTypeFilterExtension extends AbstractTypeExtension
         $resolver->setDefaults(array(
                 'cascade_filter' => true
             ));
+    }
+
+    /**
+     * @param OptionsResolver $resolver
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults(array(
+            'cascade_filter' => true
+        ));
     }
 
     /**

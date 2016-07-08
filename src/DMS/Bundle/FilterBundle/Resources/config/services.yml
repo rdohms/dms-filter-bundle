@@ -16,7 +16,7 @@ services:
             filter: '@dms.filter'
             auto_filter: '%dms_filter.auto_filter_forms%'
         tags:
-            - { name: form.type_extension, alias: Symfony\Component\Form\Extension\Core\Type\FormType }
+            - { name: form.type_extension, alias: Symfony\Component\Form\Extension\Core\Type\FormType, extended_type: Symfony\Component\Form\Extension\Core\Type\FormType }
 
     dms.filter.container_loader:
         class: DMS\Bundle\FilterBundle\Loader\ContainerAwareLoader
