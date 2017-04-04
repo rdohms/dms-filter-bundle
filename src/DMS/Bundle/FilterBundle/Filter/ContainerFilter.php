@@ -45,7 +45,7 @@ class ContainerFilter extends BaseFilter implements ContainerAwareInterface
 
         $service = $this->container->get($rule->service);
 
-        if (! method_exists($service, $rule->method)) {
+        if (! is_callable([$service, $rule->method])) {
             throw new \Exception("Unable to find the method '{$rule->method}' in service '{$rule->service}'.");
         }
 
