@@ -13,8 +13,8 @@ services:
     dms.filter.type_extension:
         class: DMS\Bundle\FilterBundle\Form\Type\FormTypeFilterExtension
         arguments:
-            filter: '@dms.filter'
-            auto_filter: '%dms_filter.auto_filter_forms%'
+            - '@dms.filter'
+            - '%dms_filter.auto_filter_forms%'
         tags:
             - { name: form.type_extension, alias: Symfony\Component\Form\Extension\Core\Type\FormType, extended_type: Symfony\Component\Form\Extension\Core\Type\FormType }
 
