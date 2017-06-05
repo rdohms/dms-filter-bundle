@@ -23,7 +23,8 @@ class ContainerAwareLoaderTest extends \PHPUnit_Framework_TestCase
     {
         parent::setUp();
 
-        $this->container = $this->getMock('Symfony\Component\DependencyInjection\ContainerInterface');
+        $this->container = $this->getMockBuilder('Symfony\Component\DependencyInjection\ContainerInterface')
+                                ->getMock();
 
         $this->loader = new ContainerAwareLoader();
         $this->loader->setContainer($this->container);
