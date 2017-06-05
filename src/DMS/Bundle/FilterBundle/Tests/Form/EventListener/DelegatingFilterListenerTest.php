@@ -50,8 +50,10 @@ class DelegatingFilterListenerTest extends \PHPUnit_Framework_TestCase
             $this->markTestSkipped('The "EventDispatcher" component is not available');
         }
 
-        $this->dispatcher   = $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
-        $this->factory      = $this->getMock('Symfony\Component\Form\FormFactoryInterface');
+        $this->dispatcher   = $this->getMockBuilder('Symfony\Component\EventDispatcher\EventDispatcherInterface')
+                                   ->getMock();
+        $this->factory      = $this->getMockBuilder('Symfony\Component\Form\FormFactoryInterface')
+                                   ->getMock();
         $this->delegate     = $this->getMockBuilder('DMS\Bundle\FilterBundle\Service\Filter')
                                    ->disableOriginalConstructor()
                                    ->getMock();
@@ -78,14 +80,16 @@ class DelegatingFilterListenerTest extends \PHPUnit_Framework_TestCase
 
     protected function getMockForm()
     {
-        return $this->getMock('Symfony\Component\Form\Test\FormInterface');
+        return $this->getMockBuilder('Symfony\Component\Form\Test\FormInterface')
+                    ->getMock();
     }
 
     public function testFilterIgnoresNonRootWithCascadeOff()
     {
         $form = $this->getMockForm();
         $parentForm = $this->getMockForm();
-        $config = $this->getMock('Symfony\Component\Form\FormConfigInterface');
+        $config = $this->getMockBuilder('Symfony\Component\Form\FormConfigInterface')
+                       ->getMock();
 
         $form->expects($this->exactly(2))
             ->method('isRoot')
@@ -121,7 +125,8 @@ class DelegatingFilterListenerTest extends \PHPUnit_Framework_TestCase
         $entity = new AnnotatedClass();
         $form = $this->getMockForm();
         $parentForm = $this->getMockForm();
-        $config = $this->getMock('Symfony\Component\Form\FormConfigInterface');
+        $config = $this->getMockBuilder('Symfony\Component\Form\FormConfigInterface')
+                       ->getMock();
 
         $form->expects($this->exactly(2))
             ->method('isRoot')

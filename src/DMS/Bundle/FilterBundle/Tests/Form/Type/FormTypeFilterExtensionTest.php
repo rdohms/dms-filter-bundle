@@ -24,13 +24,17 @@ class FormTypeFilterExtensionTest extends TypeTestCase
     protected function setUp()
     {
         $classMetadataFactory = $this->getMockBuilder('DMS\Filter\Mapping\ClassMetadataFactory')
-            ->disableOriginalConstructor()->getMock();
+                                     ->disableOriginalConstructor()
+                                     ->getMock();
 
-        $filterLoader   = $this->getMock('DMS\Filter\Filters\Loader\FilterLoaderInterface');
+        $filterLoader   = $this->getMockBuilder('DMS\Filter\Filters\Loader\FilterLoaderInterface')
+                               ->getMock();
+
         $filterExecutor = new \DMS\Filter\Filter($classMetadataFactory, $filterLoader);
 
         $this->filter = $this->getMockBuilder('DMS\Bundle\FilterBundle\Service\Filter')
-                             ->setConstructorArgs(array($filterExecutor))->getMock();
+                             ->setConstructorArgs(array($filterExecutor))
+                             ->getMock();
 
         parent::setUp();
     }

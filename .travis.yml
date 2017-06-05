@@ -3,13 +3,15 @@ language: php
 php:
     - 5.6
     - 7.0
+    - 7.1
 
 before_script:
   - composer self-update
+  - if [[ "$TRAVIS_PHP_VERSION" == 5* ]]; then rm composer.lock; fi;
   - composer install --dev
   - if [ "$SYMFONY_VERSION" != "" ]; then composer require "symfony/symfony:${SYMFONY_VERSION}" --no-update && composer update --dev; fi;
 
-script: phpunit
+script: ./vendor/bin/phpunit
 
 matrix:
   include:
@@ -18,12 +20,12 @@ matrix:
     - php: 5.6
       env: SYMFONY_VERSION=3.0.*
     - php: 5.6
-      env: SYMFONY_VERSION=3.1.*
-    - php: 7
+      env: SYMFONY_VERSION=^3
+    - php: 7.1
       env: SYMFONY_VERSION=3.0.*
-    - php: 7
-      env: SYMFONY_VERSION=3.1.*
-    - php: 7
+    - php: 7.1
+      env: SYMFONY_VERSION=^3
+    - php: 7.1
       env: SYMFONY_VERSION=dev-master@dev
   allow_failures:
     - env: SYMFONY_VERSION=dev-master@dev
