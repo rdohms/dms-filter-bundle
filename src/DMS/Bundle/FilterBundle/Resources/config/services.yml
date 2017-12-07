@@ -7,11 +7,13 @@ services:
 
     dms.filter:
         class: DMS\Bundle\FilterBundle\Service\Filter
+        public: true
         arguments:
             - '@dms.filter.inner.filter'
 
     dms.filter.type_extension:
         class: DMS\Bundle\FilterBundle\Form\Type\FormTypeFilterExtension
+        public: true
         arguments:
             - '@dms.filter'
             - '%dms_filter.auto_filter_forms%'
@@ -25,6 +27,7 @@ services:
 
     dms.filter.mapping.loader:
         class: '%dms.filter.mapping.loader.class%'
+        public: true
         arguments:
             - '@annotation_reader'
 
@@ -41,5 +44,6 @@ services:
 
     dms.filter.container_filter:
         class: DMS\Bundle\FilterBundle\Filter\ContainerFilter
+        public: true
         calls:
             - [setContainer, ['@service_container']]
