@@ -3,7 +3,6 @@
 namespace DMS\Bundle\FilterBundle\Tests\Form\Type;
 
 use DMS\Bundle\FilterBundle\Service\Filter;
-use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\FormEvents;
 use DMS\Bundle\FilterBundle\Tests\Dummy\AnnotatedClass;
 use DMS\Bundle\FilterBundle\Form\FilterExtension;
@@ -53,7 +52,7 @@ class FormTypeFilterExtensionTest extends TypeTestCase
     public function testFilterSubscriberDefined()
     {
         /** @var $form \Symfony\Component\Form\Form */
-        $form =  $this->factory->create(FormType::class);
+        $form =  $this->factory->create('Symfony\Component\Form\Extension\Core\Type\FormType');
 
         $dispatcher = $form->getConfig()->getEventDispatcher();
 
@@ -73,7 +72,7 @@ class FormTypeFilterExtensionTest extends TypeTestCase
         $this->setUp();
 
         /** @var $form \Symfony\Component\Form\Form */
-        $form =  $this->factory->create(FormType::class);
+        $form =  $this->factory->create('Symfony\Component\Form\Extension\Core\Type\FormType');
 
         $dispatcher = $form->getConfig()->getEventDispatcher();
 
@@ -83,8 +82,8 @@ class FormTypeFilterExtensionTest extends TypeTestCase
     public function testBindValidatesData()
     {
         $entity = new AnnotatedClass();
-        $builder = $this->factory->createBuilder(FormType::class, $entity);
-        $builder->add('name', FormType::class);
+        $builder = $this->factory->createBuilder('Symfony\Component\Form\Extension\Core\Type\FormType', $entity);
+        $builder->add('name', 'Symfony\Component\Form\Extension\Core\Type\FormType');
         $form = $builder->getForm();
 
         $this->filter->expects($this->atLeastOnce())
