@@ -4,8 +4,10 @@ php:
     - 5.6
     - 7.0
     - 7.1
+    - 7.2
 
 before_script:
+  - phpenv config-rm xdebug.ini
   - composer self-update
   - if [[ "$TRAVIS_PHP_VERSION" == 5* ]]; then rm composer.lock; fi;
   - composer install --dev
@@ -21,20 +23,6 @@ matrix:
       env: SYMFONY_VERSION=3.0.*
     - php: 5.6
       env: SYMFONY_VERSION=^3
-    - php: 7.0
-      env: SYMFONY_VERSION=2.8.*
-    - php: 7.0
-      env: SYMFONY_VERSION=3.0.*
-    - php: 7.0
-      env: SYMFONY_VERSION=^3
-    - php: 7.1
-      env: SYMFONY_VERSION=3.0.*
-    - php: 7.1
-      env: SYMFONY_VERSION=^3
-    - php: 7.1
-      env: SYMFONY_VERSION=^4
-    - php: 7.1
-      env: SYMFONY_VERSION=dev-master@dev
     - php: 7.2
       env: SYMFONY_VERSION=3.0.*
     - php: 7.2
