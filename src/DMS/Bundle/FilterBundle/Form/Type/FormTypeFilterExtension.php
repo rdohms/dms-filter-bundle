@@ -75,6 +75,6 @@ class FormTypeFilterExtension extends AbstractTypeExtension
      */
     public function getExtendedType()
     {
-        return FormType::class;
+        return 'Symfony\Component\Form\Extension\Core\Type\FormType';
     }
 }
