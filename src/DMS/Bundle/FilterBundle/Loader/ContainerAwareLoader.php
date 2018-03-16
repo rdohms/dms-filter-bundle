@@ -28,8 +28,9 @@ class ContainerAwareLoader extends FilterLoader implements ContainerAwareInterfa
      *
      * @param Rule $rule
      * @return BaseFilter
+     * @throws \UnexpectedValueException
      */
-    public function getFilterForRule(Rule $rule)
+    public function getFilterForRule(Rule $rule): ?BaseFilter
     {
         $filterIdentifier = $rule->getFilter();
 

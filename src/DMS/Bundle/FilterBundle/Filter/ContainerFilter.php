@@ -34,19 +34,19 @@ class ContainerFilter extends BaseFilter implements ContainerAwareInterface
      * @param Service|Rule $rule
      * @param mixed $value
      *
-     * @throws \Exception
+     * @throws \RuntimeException
      * @return mixed
      */
     public function apply(Rule $rule, $value)
     {
         if (!$this->container->has($rule->service)) {
-            throw new \Exception("Unable to find service '{$rule->service}' to execute defined rule.");
+            throw new \RuntimeException("Unable to find service '{$rule->service}' to execute defined rule.");
         }
 
         $service = $this->container->get($rule->service);
 
-        if (! is_callable([$service, $rule->method])) {
-            throw new \Exception("Unable to find the method '{$rule->method}' in service '{$rule->service}'.");
+        if (! \is_callable([$service, $rule->method])) {
+            throw new \RuntimeException("Unable to find the method '{$rule->method}' in service '{$rule->service}'.");
         }
 
         $method = $rule->method;

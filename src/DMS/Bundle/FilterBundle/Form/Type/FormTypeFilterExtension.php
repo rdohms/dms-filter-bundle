@@ -1,13 +1,13 @@
 <?php
+
 namespace DMS\Bundle\FilterBundle\Form\Type;
 
+use DMS\Bundle\FilterBundle\Form\EventListener\DelegatingFilterListener;
+use DMS\Bundle\FilterBundle\Service\Filter;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\FormBuilderInterface;
-use DMS\Bundle\FilterBundle\Service\Filter;
-use DMS\Bundle\FilterBundle\Form\EventListener\DelegatingFilterListener;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * Form Type Filter Extension
@@ -35,29 +35,19 @@ class FormTypeFilterExtension extends AbstractTypeExtension
     public function __construct(Filter $filterService, $autoFilter)
     {
         $this->filterService = $filterService;
-        $this->autoFilter    = $autoFilter;
+        $this->autoFilter = $autoFilter;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        if (! $this->autoFilter) {
+        if (!$this->autoFilter) {
             return;
         }
 
         $builder->addEventSubscriber(new DelegatingFilterListener($this->filterService));
-    }
-
-    /**
-     * @param OptionsResolverInterface $resolver
-     */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
-        $resolver->setDefaults(array(
-                'cascade_filter' => true
-            ));
     }
 
     /**
