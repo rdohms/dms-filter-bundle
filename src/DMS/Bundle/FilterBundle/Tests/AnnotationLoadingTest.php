@@ -9,8 +9,9 @@ use DMS\Filter\Mapping\Loader\LoaderInterface;
 use DMS\Filter\Rules\StripTags;
 use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\Common\Annotations\AnnotationRegistry;
+use PHPUnit\Framework\TestCase;
 
-class AnnotationLoadingTest extends \PHPUnit_Framework_TestCase
+class AnnotationLoadingTest extends TestCase
 {
     /**
      * @var AnnotationReader
