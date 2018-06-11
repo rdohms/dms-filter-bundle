@@ -2,6 +2,7 @@
 
 namespace DMS\Bundle\FilterBundle\Rule;
 
+use DMS\Bundle\FilterBundle\Filter\ContainerFilter;
 use DMS\Filter\Rules\Rule;
 
 /**
@@ -26,7 +27,7 @@ class Service extends Rule
     /**
      * {@inheritdoc}
      */
-    public function getRequiredOptions()
+    public function getRequiredOptions(): array
     {
         return array('service', 'method');
     }
@@ -34,8 +35,8 @@ class Service extends Rule
     /**
      * @return string
      */
-    public function getFilter()
+    public function getFilter(): string
     {
-        return 'dms.filter.container_filter';
+        return ContainerFilter::class;
     }
 }

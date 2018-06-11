@@ -22,6 +22,7 @@ class Filter
 
     /**
      * Instantiates the Filter Service
+     * @param FilterInterface $filter
      */
     public function __construct(FilterInterface $filter)
     {
@@ -33,7 +34,7 @@ class Filter
      *
      * @param object $object
      */
-    public function filterEntity($object)
+    public function filterEntity($object): void
     {
         $this->filterExecutor->filterEntity($object);
     }
@@ -44,7 +45,7 @@ class Filter
      * @param object $object
      * @param string $property
      */
-    public function filterProperty($object, $property)
+    public function filterProperty($object, $property): void
     {
         $this->filterExecutor->filterProperty($object, $property);
     }
@@ -66,9 +67,9 @@ class Filter
     /**
      * Retrieve the actual filter executor instance
      *
-     * @return \DMS\Filter\Filter
+     * @return FilterInterface
      */
-    public function getFilterExecutor()
+    public function getFilterExecutor(): FilterInterface
     {
         return $this->filterExecutor;
     }

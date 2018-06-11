@@ -3,10 +3,12 @@
 namespace DMS\DMS\Bundle\FilterBundle\Tests\Integration;
 
 use DMS\Bundle\FilterBundle\DependencyInjection\DMSFilterExtension;
+use DMS\Bundle\FilterBundle\Service\Filter;
 use Doctrine\Common\Annotations\AnnotationReader;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-class ContainerTest extends \PHPUnit_Framework_TestCase
+class ContainerTest extends TestCase
 {
     /**
      * @var ContainerBuilder
@@ -32,7 +34,7 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
 
     public function testContainerBoots()
     {
-        $this->container->get('dms.filter');
+        $this->container->get(Filter::class);
 
         if (method_exists($this->container, 'isCompiled')) {
             self::assertTrue($this->container->isCompiled());

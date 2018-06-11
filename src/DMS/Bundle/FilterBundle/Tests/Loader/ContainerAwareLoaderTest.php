@@ -4,10 +4,12 @@
 namespace DMS\Bundle\FilterBundle\Tests\Loader;
 
 use DMS\Bundle\FilterBundle\Loader\ContainerAwareLoader;
+use DMS\Filter\Filters\StripTags as StripTagsFilter;
 use DMS\Filter\Rules\StripTags;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class ContainerAwareLoaderTest extends \PHPUnit_Framework_TestCase
+class ContainerAwareLoaderTest extends TestCase
 {
     /**
      * @var ContainerInterface | \PHPUnit_Framework_MockObject_MockObject
@@ -19,17 +21,6 @@ class ContainerAwareLoaderTest extends \PHPUnit_Framework_TestCase
      */
     protected $loader;
 
-    protected function setUp()
-    {
-        parent::setUp();
-
-        $this->container = $this->getMockBuilder('Symfony\Component\DependencyInjection\ContainerInterface')
-                                ->getMock();
-
-        $this->loader = new ContainerAwareLoader();
-        $this->loader->setContainer($this->container);
-    }
-
     public function testGetFilterForRule()
     {
         $this->container->expects($this->once())->method('has')->will($this->returnValue(true));
@@ -37,7 +28,7 @@ class ContainerAwareLoaderTest extends \PHPUnit_Framework_TestCase
 
         $filter = $this->loader->getFilterForRule(new StripTags());
 
-        $this->assertInstanceOf('\stdClass', $filter);
+        $this->assertInstanceOf(\stdClass::class, $filter);
     }
 
     public function testGetFilterForRuleCascade()
@@ -47,6 +38,17 @@ class ContainerAwareLoaderTest extends \PHPUnit_Framework_TestCase
 
         $filter = $this->loader->getFilterForRule(new StripTags());
 
-        $this->assertInstanceOf('\DMS\Filter\Filters\StripTags', $filter);
+        $this->assertInstanceOf(StripTagsFilter::class, $filter);
+    }
+
+    protected function setUp()
+    {
+        parent::setUp();
+
+        $this->container = $this->getMockBuilder(ContainerInterface::class)
+            ->getMock();
+
+        $this->loader = new ContainerAwareLoader();
+        $this->loader->setContainer($this->container);
     }
 }
