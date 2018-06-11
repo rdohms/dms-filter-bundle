@@ -4,24 +4,21 @@ parameters:
     dms.filter.inner.filter.class: DMS\Filter\Filter
 
 services:
-
-    dms.filter:
-        class: DMS\Bundle\FilterBundle\Service\Filter
+    # Class service.
+    DMS\Bundle\FilterBundle\Service\Filter:
         public: true
         arguments:
             - '@dms.filter.inner.filter'
 
-    dms.filter.type_extension:
-        class: DMS\Bundle\FilterBundle\Form\Type\FormTypeFilterExtension
+    DMS\Bundle\FilterBundle\Form\Type\FormTypeFilterExtension:
         public: true
         arguments:
-            - '@dms.filter'
+            - '@DMS\Bundle\FilterBundle\Service\Filter'
             - '%dms_filter.auto_filter_forms%'
         tags:
             - { name: form.type_extension, alias: Symfony\Component\Form\Extension\Core\Type\FormType, extended_type: Symfony\Component\Form\Extension\Core\Type\FormType }
 
-    dms.filter.container_loader:
-        class: DMS\Bundle\FilterBundle\Loader\ContainerAwareLoader
+    DMS\Bundle\FilterBundle\Loader\ContainerAwareLoader:
         calls:
          - [ setContainer,  ['@service_container'] ]
 
@@ -40,10 +37,9 @@ services:
         class: '%dms.filter.inner.filter.class%'
         arguments:
             - '@dms.filter.mapping.factory'
-            - '@dms.filter.container_loader'
+            - '@DMS\Bundle\FilterBundle\Loader\ContainerAwareLoader'
 
-    dms.filter.container_filter:
-        class: DMS\Bundle\FilterBundle\Filter\ContainerFilter
+    DMS\Bundle\FilterBundle\Filter\ContainerFilter:
         public: true
         calls:
             - [setContainer, ['@service_container']]
