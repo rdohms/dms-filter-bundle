@@ -12,6 +12,9 @@ use DMS\Bundle\FilterBundle\Tests\Dummy\AnnotatedClass;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\PropertyAccess\PropertyPath;
+use Symfony\Component\Form\FormConfigInterface;
+use Symfony\Component\Form\Test\FormInterface;
+use Symfony\Component\EventDispatcher\Event;
 
 class DelegatingFilterListenerTest extends TestCase
 {
@@ -47,15 +50,15 @@ class DelegatingFilterListenerTest extends TestCase
 
     protected function setUp()
     {
-        if (!class_exists('Symfony\Component\EventDispatcher\Event')) {
+        if (!class_exists(Event::class)) {
             $this->markTestSkipped('The "EventDispatcher" component is not available');
         }
 
-        $this->dispatcher   = $this->getMockBuilder('Symfony\Component\EventDispatcher\EventDispatcherInterface')
+        $this->dispatcher   = $this->getMockBuilder(EventDispatcherInterface::class)
                                    ->getMock();
-        $this->factory      = $this->getMockBuilder('Symfony\Component\Form\FormFactoryInterface')
+        $this->factory      = $this->getMockBuilder(FormFactoryInterface::class)
                                    ->getMock();
-        $this->delegate     = $this->getMockBuilder('DMS\Bundle\FilterBundle\Service\Filter')
+        $this->delegate     = $this->getMockBuilder(Filter::class)
                                    ->disableOriginalConstructor()
                                    ->getMock();
         $this->listener     = new DelegatingFilterListener($this->delegate);
@@ -81,7 +84,7 @@ class DelegatingFilterListenerTest extends TestCase
 
     protected function getMockForm()
     {
-        return $this->getMockBuilder('Symfony\Component\Form\Test\FormInterface')
+        return $this->getMockBuilder(FormInterface::class)
                     ->getMock();
     }
 
@@ -89,7 +92,7 @@ class DelegatingFilterListenerTest extends TestCase
     {
         $form = $this->getMockForm();
         $parentForm = $this->getMockForm();
-        $config = $this->getMockBuilder('Symfony\Component\Form\FormConfigInterface')
+        $config = $this->getMockBuilder(FormConfigInterface::class)
                        ->getMock();
 
         $form->expects($this->exactly(2))
@@ -126,7 +129,7 @@ class DelegatingFilterListenerTest extends TestCase
         $entity = new AnnotatedClass();
         $form = $this->getMockForm();
         $parentForm = $this->getMockForm();
-        $config = $this->getMockBuilder('Symfony\Component\Form\FormConfigInterface')
+        $config = $this->getMockBuilder(FormConfigInterface::class)
                        ->getMock();
 
         $form->expects($this->exactly(2))
