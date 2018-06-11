@@ -2,6 +2,7 @@
 
 namespace DMS\Bundle\FilterBundle\Rule;
 
+use DMS\Bundle\FilterBundle\Filter\ContainerFilter;
 use DMS\Filter\Rules\Rule;
 
 /**
@@ -36,6 +37,6 @@ class Service extends Rule
      */
     public function getFilter(): string
     {
-        return 'dms.filter.container_filter';
+        return ContainerFilter::class;
     }
 }
