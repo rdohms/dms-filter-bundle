@@ -10,6 +10,9 @@ use DMS\Filter\Rules\StripTags;
 use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\Common\Annotations\AnnotationRegistry;
 use PHPUnit\Framework\TestCase;
+use DMS\Bundle\FilterBundle\Tests\Dummy\AnnotatedClass;
+use DMS\Bundle\FilterBundle\Rule\Service;
+use DMS\Filter\Rules\Alpha;
 
 class AnnotationLoadingTest extends TestCase
 {
@@ -40,12 +43,12 @@ class AnnotationLoadingTest extends TestCase
 
     public function testRuleLoader()
     {
-        $metadata = $this->factory->getClassMetadata('DMS\Bundle\FilterBundle\Tests\Dummy\AnnotatedClass');
+        $metadata = $this->factory->getClassMetadata(AnnotatedClass::class);
 
-        $this->assertRules(2, array('DMS\Filter\Rules\StripTags', 'DMS\Filter\Rules\Alpha'), $metadata->getPropertyRules('name'));
-        $this->assertRules(1, array('DMS\Filter\Rules\StripTags'), $metadata->getPropertyRules('nickname'));
-        $this->assertRules(1, array('DMS\Filter\Rules\StripTags'), $metadata->getPropertyRules('description'));
-        $this->assertRules(1, array('DMS\Bundle\FilterBundle\Rule\Service'), $metadata->getPropertyRules('serviceFiltered'));
+        $this->assertRules(2, array(StripTags::class, Alpha::class), $metadata->getPropertyRules('name'));
+        $this->assertRules(1, array(StripTags::class), $metadata->getPropertyRules('nickname'));
+        $this->assertRules(1, array(StripTags::class), $metadata->getPropertyRules('description'));
+        $this->assertRules(1, array(Service::class), $metadata->getPropertyRules('serviceFiltered'));
 
         $rules = $metadata->getPropertyRules('description');
 

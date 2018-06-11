@@ -24,8 +24,8 @@
     },
 
     "autoload": {
-        "psr-0": {
-            "DMS": "src"
+        "psr-4": {
+            "DMS\\Bundle\\FilterBundle\\": "./src/DMS/Bundle/FilterBundle"
         }
     }
 }
