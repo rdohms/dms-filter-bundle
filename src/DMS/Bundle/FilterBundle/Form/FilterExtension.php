@@ -2,10 +2,9 @@
 
 namespace DMS\Bundle\FilterBundle\Form;
 
-use Symfony\Component\Form\Extension\Validator\Type;
-use Symfony\Component\Form\AbstractExtension;
-use DMS\Bundle\FilterBundle\Service\Filter;
 use DMS\Bundle\FilterBundle\Form\Type\FormTypeFilterExtension;
+use DMS\Bundle\FilterBundle\Service\Filter;
+use Symfony\Component\Form\AbstractExtension;
 
 /**
  * Filter Extension
@@ -15,14 +14,13 @@ use DMS\Bundle\FilterBundle\Form\Type\FormTypeFilterExtension;
 class FilterExtension extends AbstractExtension
 {
     /**
-     * @var Filter
-     */
-    private $filter;
-
-    /**
      * @var boolean
      */
     protected $autoFilter;
+    /**
+     * @var Filter
+     */
+    private $filter;
 
     /**
      * {@inheritdoc}
@@ -32,14 +30,14 @@ class FilterExtension extends AbstractExtension
      */
     public function __construct(Filter $filterService, $autoFilter)
     {
-        $this->filter     = $filterService;
+        $this->filter = $filterService;
         $this->autoFilter = $autoFilter;
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function loadTypeExtensions()
+    protected function loadTypeExtensions(): array
     {
         return array(
             new FormTypeFilterExtension($this->filter, $this->autoFilter),

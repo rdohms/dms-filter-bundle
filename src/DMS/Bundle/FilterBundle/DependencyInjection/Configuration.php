@@ -14,8 +14,9 @@ class Configuration implements ConfigurationInterface
 {
     /**
      * {@inheritDoc}
+     * @throws \RuntimeException
      */
-    public function getConfigTreeBuilder()
+    public function getConfigTreeBuilder(): TreeBuilder
     {
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('dms_filter');

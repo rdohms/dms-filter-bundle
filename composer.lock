@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "93da72eb19e0bdf7bd5b76871ab73443",
+    "content-hash": "c033590236ba9f784561d9d2cbbcf081",
     "packages": [
         {
             "name": "dms/dms-filter",
@@ -2431,10 +2431,7 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": "^5.6|^7"
+        "php": "^7.1.13"
     },
-    "platform-dev": [],
-    "platform-overrides": {
-        "php": "7.1.0"
-    }
+    "platform-dev": []
 }
