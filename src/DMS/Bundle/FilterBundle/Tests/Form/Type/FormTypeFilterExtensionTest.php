@@ -82,6 +82,13 @@ class FormTypeFilterExtensionTest extends TypeTestCase
         $dispatcher = $form->getConfig()->getEventDispatcher();
 
         $listeners = $dispatcher->getListeners(FormEvents::POST_SUBMIT);
+        $filter = function ($value) {
+            return (get_class($value[0]) == "DMS\Bundle\FilterBundle\Form\EventListener\DelegatingFilterListener");
+        };
+
+        $filterListeners = array_filter($listeners, $filter);
+
+        $this->assertEquals(0, count($filterListeners));
     }
 
     public function testBindValidatesData()
