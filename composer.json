@@ -16,7 +16,9 @@
     "require": {
         "php":  "^7.1.13",
         "dms/dms-filter": "^2.0 | ^3.0",
-        "symfony/symfony": "^2.8.18 | ^3.0 | ^4.0"
+        "symfony/yaml": "^3.4 | ^4.0",
+        "symfony/framework-bundle": "^3.4 | ^4.0",
+        "symfony/form": "^3.4 | ^4.0"
     },
 
     "require-dev": {
