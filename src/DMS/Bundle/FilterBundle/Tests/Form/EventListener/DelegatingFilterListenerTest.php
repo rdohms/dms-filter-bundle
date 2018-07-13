@@ -3,6 +3,7 @@
 namespace DMS\Bundle\FilterBundle\Tests\Form\EventListener;
 
 use DMS\Bundle\FilterBundle\Form\EventListener\DelegatingFilterListener;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormBuilder;
@@ -12,7 +13,7 @@ use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\PropertyAccess\PropertyPath;
 
-class DelegatingFilterListenerTest extends \PHPUnit_Framework_TestCase
+class DelegatingFilterListenerTest extends TestCase
 {
     /**
      * @var EventDispatcherInterface | \PHPUnit_Framework_MockObject_MockObject

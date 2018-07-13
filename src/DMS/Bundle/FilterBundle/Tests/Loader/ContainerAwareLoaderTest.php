@@ -5,9 +5,10 @@ namespace DMS\Bundle\FilterBundle\Tests\Loader;
 
 use DMS\Bundle\FilterBundle\Loader\ContainerAwareLoader;
 use DMS\Filter\Rules\StripTags;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class ContainerAwareLoaderTest extends \PHPUnit_Framework_TestCase
+class ContainerAwareLoaderTest extends TestCase
 {
     /**
      * @var ContainerInterface | \PHPUnit_Framework_MockObject_MockObject
