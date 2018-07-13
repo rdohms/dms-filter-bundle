@@ -42,7 +42,7 @@ class FilterExtension extends AbstractExtension
     protected function loadTypeExtensions()
     {
         return array(
-            new FormTypeFilterExtension($this->filter, true),
+            new FormTypeFilterExtension($this->filter, $this->autoFilter),
         );
     }
 }
