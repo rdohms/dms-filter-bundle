@@ -18,7 +18,7 @@ class ContainerAwareLoader extends FilterLoader implements ContainerAwareInterfa
     /**
      * @param ContainerInterface $container
      */
-    public function setContainer(ContainerInterface $container = null)
+    public function setContainer(ContainerInterface $container = null): void
     {
         $this->container = $container;
     }
@@ -27,7 +27,8 @@ class ContainerAwareLoader extends FilterLoader implements ContainerAwareInterfa
      * Attempts to load Filter from Container or hands off to parent loader.
      *
      * @param Rule $rule
-     * @return BaseFilter
+     * @return BaseFilter|null|\stdClass
+     * @throws \UnexpectedValueException
      */
     public function getFilterForRule(Rule $rule)
     {

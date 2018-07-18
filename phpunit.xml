@@ -3,14 +3,17 @@
 
     <testsuites>
         <testsuite name="DMS Filter Bundle">
-            <directory>src</directory>
+            <directory>./src/DMS/Bundle/FilterBundle/Tests/</directory>
         </testsuite>
     </testsuites>
 
     <filter>
-        <blacklist>
-            <directory>src/DMS/Bundle/FilterBundle/Tests</directory>
-            <directory>vendor</directory>
-        </blacklist>
+        <whitelist>
+            <directory>./src</directory>
+            <exclude>
+                <directory>./src/DMS/Bundle/FilterBundle/Tests</directory>
+                <directory>./src/DMS/Bundle/FilterBundle/Resources</directory>
+            </exclude>
+        </whitelist>
     </filter>
 </phpunit>
