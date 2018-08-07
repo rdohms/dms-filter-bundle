@@ -1,9 +1,10 @@
 <?php
+declare(strict_types=1);
 
 namespace DMS\Bundle\FilterBundle\Tests\Dummy;
 
-use DMS\Filter\Rules as Filter;
 use DMS\Bundle\FilterBundle\Rule as SfFilter;
+use DMS\Filter\Rules as Filter;
 
 class AnnotatedClass
 {

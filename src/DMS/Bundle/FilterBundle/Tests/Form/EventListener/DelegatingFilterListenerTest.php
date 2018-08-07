@@ -1,35 +1,38 @@
 <?php
+declare(strict_types=1);
 
 namespace DMS\Bundle\FilterBundle\Tests\Form\EventListener;
 
 use DMS\Bundle\FilterBundle\Form\EventListener\DelegatingFilterListener;
-use PHPUnit\Framework\TestCase;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormBuilder;
 use DMS\Bundle\FilterBundle\Service\Filter;
 use DMS\Bundle\FilterBundle\Tests\Dummy\AnnotatedClass;
+use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\TestCase;
+use Symfony\Component\EventDispatcher\Event;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Form\FormConfigInterface;
+use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormFactoryInterface;
-use Symfony\Component\PropertyAccess\PropertyPath;
-use Symfony\Component\Form\FormConfigInterface;
 use Symfony\Component\Form\Test\FormInterface;
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Component\PropertyAccess\PropertyPath;
+use function class_exists;
 
 class DelegatingFilterListenerTest extends TestCase
 {
     /**
-     * @var EventDispatcherInterface | \PHPUnit_Framework_MockObject_MockObject
+     * @var EventDispatcherInterface|\PHPUnit_Framework_MockObject_MockObject
      */
     private $dispatcher;
 
     /**
-     * @var FormFactoryInterface | \PHPUnit_Framework_MockObject_MockObject
+     * @var FormFactoryInterface|\PHPUnit_Framework_MockObject_MockObject
      */
     private $factory;
 
     /**
-     * @var Filter | \PHPUnit_Framework_MockObject_MockObject
+     * @var Filter|\PHPUnit_Framework_MockObject_MockObject
      */
     private $delegate;
 
@@ -38,61 +41,48 @@ class DelegatingFilterListenerTest extends TestCase
      */
     private $listener;
 
-    /**
-     * @var string
-     */
-    private $message;
-
-    /**
-     * @var array
-     */
-    private $params;
-
-    protected function setUp()
+    protected function setUp(): void
     {
-        if (!class_exists(Event::class)) {
+        if (! class_exists(Event::class)) {
             $this->markTestSkipped('The "EventDispatcher" component is not available');
         }
 
-        $this->dispatcher   = $this->getMockBuilder(EventDispatcherInterface::class)
+        $this->dispatcher = $this->getMockBuilder(EventDispatcherInterface::class)
                                    ->getMock();
-        $this->factory      = $this->getMockBuilder(FormFactoryInterface::class)
+        $this->factory    = $this->getMockBuilder(FormFactoryInterface::class)
                                    ->getMock();
-        $this->delegate     = $this->getMockBuilder(Filter::class)
+        $this->delegate   = $this->getMockBuilder(Filter::class)
                                    ->disableOriginalConstructor()
                                    ->getMock();
-        $this->listener     = new DelegatingFilterListener($this->delegate);
-
-        $this->message = 'Message';
-        $this->params = array('foo' => 'bar');
+        $this->listener   = new DelegatingFilterListener($this->delegate);
     }
 
-    protected function getBuilder($name = 'name', $propertyPath = null)
+    protected function getBuilder(string $name = 'name', ?string $propertyPath = null): FormBuilder
     {
         $builder = new FormBuilder($name, '', $this->dispatcher, $this->factory);
         $builder->setAttribute('property_path', new PropertyPath($propertyPath ?: $name));
-        $builder->setAttribute('error_mapping', array());
+        $builder->setAttribute('error_mapping', []);
         $builder->setErrorBubbling(false);
 
         return $builder;
     }
 
-    protected function getForm($name = 'name', $propertyPath = null)
+    protected function getForm(string $name = 'name', ?string $propertyPath = null): FormInterface
     {
         return $this->getBuilder($name, $propertyPath)->getForm();
     }
 
-    protected function getMockForm()
+    protected function getMockForm(): MockObject
     {
         return $this->getMockBuilder(FormInterface::class)
                     ->getMock();
     }
 
-    public function testFilterIgnoresNonRootWithCascadeOff()
+    public function testFilterIgnoresNonRootWithCascadeOff(): void
     {
-        $form = $this->getMockForm();
+        $form       = $this->getMockForm();
         $parentForm = $this->getMockForm();
-        $config = $this->getMockBuilder(FormConfigInterface::class)
+        $config     = $this->getMockBuilder(FormConfigInterface::class)
                        ->getMock();
 
         $form->expects($this->exactly(2))
@@ -124,12 +114,12 @@ class DelegatingFilterListenerTest extends TestCase
         $this->listener->onPostSubmit(new FormEvent($form, null));
     }
 
-    public function testFilterFiltersNonRootWithCascadeOn()
+    public function testFilterFiltersNonRootWithCascadeOn(): void
     {
-        $entity = new AnnotatedClass();
-        $form = $this->getMockForm();
+        $entity     = new AnnotatedClass();
+        $form       = $this->getMockForm();
         $parentForm = $this->getMockForm();
-        $config = $this->getMockBuilder(FormConfigInterface::class)
+        $config     = $this->getMockBuilder(FormConfigInterface::class)
                        ->getMock();
 
         $form->expects($this->exactly(2))
@@ -162,7 +152,7 @@ class DelegatingFilterListenerTest extends TestCase
         $this->listener->onPostSubmit(new FormEvent($form, null));
     }
 
-    public function testFilterIgnoresNoObject()
+    public function testFilterIgnoresNoObject(): void
     {
         $form = $this->getMockForm();
 
@@ -172,7 +162,7 @@ class DelegatingFilterListenerTest extends TestCase
 
         $form->expects($this->once())
             ->method('getData')
-            ->will($this->returnValue(array(1,2,3)));
+            ->will($this->returnValue([1, 2, 3]));
 
         $this->delegate->expects($this->never())
             ->method('filterEntity');
@@ -180,10 +170,10 @@ class DelegatingFilterListenerTest extends TestCase
         $this->listener->onPostSubmit(new FormEvent($form, null));
     }
 
-    public function testFilterOnPostBind()
+    public function testFilterOnPostBind(): void
     {
         $entity = new AnnotatedClass();
-        $form = $this->getMockForm();
+        $form   = $this->getMockForm();
 
         $form->expects($this->once())
             ->method('isRoot')
@@ -199,7 +189,7 @@ class DelegatingFilterListenerTest extends TestCase
         $this->listener->onPostSubmit(new FormEvent($form, null));
     }
 
-    public function testAssertEventsBinding()
+    public function testAssertEventsBinding(): void
     {
         $bindedEvents = $this->listener->getSubscribedEvents();
 

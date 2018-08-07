@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 
 namespace DMS\Bundle\FilterBundle\Tests\Loader;
 
@@ -21,7 +21,7 @@ class ContainerAwareLoaderTest extends TestCase
      */
     protected $loader;
 
-    public function testGetFilterForRule()
+    public function testGetFilterForRule(): void
     {
         $this->container->expects($this->once())->method('has')->will($this->returnValue(true));
         $this->container->expects($this->once())->method('get')->will($this->returnValue(new \stdClass()));
@@ -31,7 +31,7 @@ class ContainerAwareLoaderTest extends TestCase
         $this->assertInstanceOf(\stdClass::class, $filter);
     }
 
-    public function testGetFilterForRuleCascade()
+    public function testGetFilterForRuleCascade(): void
     {
         $this->container->expects($this->once())->method('has')->will($this->returnValue(false));
         $this->container->expects($this->never())->method('get');
@@ -41,7 +41,7 @@ class ContainerAwareLoaderTest extends TestCase
         $this->assertInstanceOf(StripTagsFilter::class, $filter);
     }
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

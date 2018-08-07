@@ -1,11 +1,14 @@
 <?php
+declare(strict_types=1);
+
 namespace DMS\Bundle\FilterBundle\Form\EventListener;
 
+use DMS\Bundle\FilterBundle\Service\Filter;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use DMS\Bundle\FilterBundle\Service\Filter;
 use Symfony\Component\Form\FormInterface;
+use function is_object;
 
 /**
  * Delegating Filter Listener
@@ -16,13 +19,10 @@ use Symfony\Component\Form\FormInterface;
 class DelegatingFilterListener implements EventSubscriberInterface
 {
     /**
-     * @var \DMS\Bundle\FilterBundle\Service\Filter
+     * @var Filter
      */
     protected $filterService;
 
-    /**
-     * @param \DMS\Bundle\FilterBundle\Service\Filter $filterService
-     */
     public function __construct(Filter $filterService)
     {
         $this->filterService = $filterService;
@@ -33,9 +33,9 @@ class DelegatingFilterListener implements EventSubscriberInterface
      */
     public static function getSubscribedEvents(): array
     {
-        return array(
-            FormEvents::POST_SUBMIT => array('onPostSubmit', 1024),
-        );
+        return [
+            FormEvents::POST_SUBMIT => ['onPostSubmit', 1024],
+        ];
     }
 
     /**
@@ -46,7 +46,6 @@ class DelegatingFilterListener implements EventSubscriberInterface
      * entity, or will only filter the root entity if 'cascade_filter'
      * is set to false.
      *
-     * @param FormEvent $event
      */
     public function onPostSubmit(FormEvent $event): void
     {
@@ -58,7 +57,7 @@ class DelegatingFilterListener implements EventSubscriberInterface
 
         $clientData = $form->getData();
 
-        if (! \is_object($clientData)) {
+        if (! is_object($clientData)) {
             return;
         }
 
@@ -68,10 +67,8 @@ class DelegatingFilterListener implements EventSubscriberInterface
     /**
      * Navigates to the Root form to define if cascading should be done.
      *
-     * @param FormInterface $form
-     * @return boolean
      */
-    public function getRootFormCascadeOption(FormInterface $form)
+    public function getRootFormCascadeOption(FormInterface $form): bool
     {
         if (! $form->isRoot()) {
             return $this->getRootFormCascadeOption($form->getParent());

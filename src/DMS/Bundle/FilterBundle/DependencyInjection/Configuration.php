@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace DMS\Bundle\FilterBundle\DependencyInjection;
 
@@ -19,7 +20,7 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder(): TreeBuilder
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('dms_filter');
+        $rootNode    = $treeBuilder->root('dms_filter');
 
         $rootNode->children()->booleanNode('auto_filter_forms')->defaultValue(true);
 

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace DMS\DMS\Bundle\FilterBundle\Tests\Integration;
 
@@ -7,6 +8,7 @@ use DMS\Bundle\FilterBundle\Service\Filter;
 use Doctrine\Common\Annotations\AnnotationReader;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use function method_exists;
 
 class ContainerTest extends TestCase
 {
@@ -17,9 +19,8 @@ class ContainerTest extends TestCase
 
     /**
      * @before
-     * @return void
      */
-    public function buildContainer()
+    public function buildContainer(): void
     {
         $this->container = new ContainerBuilder();
 
@@ -32,7 +33,7 @@ class ContainerTest extends TestCase
         $this->container->compile();
     }
 
-    public function testContainerBoots()
+    public function testContainerBoots(): void
     {
         $this->container->get(Filter::class);
 
@@ -41,6 +42,5 @@ class ContainerTest extends TestCase
         } else {
             self::assertTrue($this->container->isFrozen());
         }
-
     }
 }

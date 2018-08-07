@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace DMS\Bundle\FilterBundle\Loader;
 
@@ -15,10 +16,7 @@ class ContainerAwareLoader extends FilterLoader implements ContainerAwareInterfa
      */
     protected $container;
 
-    /**
-     * @param ContainerInterface $container
-     */
-    public function setContainer(ContainerInterface $container = null): void
+    public function setContainer(?ContainerInterface $container = null): void
     {
         $this->container = $container;
     }
@@ -26,7 +24,6 @@ class ContainerAwareLoader extends FilterLoader implements ContainerAwareInterfa
     /**
      * Attempts to load Filter from Container or hands off to parent loader.
      *
-     * @param Rule $rule
      * @return BaseFilter|null|\stdClass
      * @throws \UnexpectedValueException
      */
@@ -34,7 +31,7 @@ class ContainerAwareLoader extends FilterLoader implements ContainerAwareInterfa
     {
         $filterIdentifier = $rule->getFilter();
 
-        if ($this->container === null || !$this->container->has($filterIdentifier)) {
+        if ($this->container === null || ! $this->container->has($filterIdentifier)) {
             return parent::getFilterForRule($rule);
         }
 
