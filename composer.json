@@ -22,7 +22,8 @@
     },
 
     "require-dev": {
-        "phpunit/phpunit": "^6"
+        "phpunit/phpunit": "^6",
+        "dms/coding-standard": "^1.0"
     },
 
     "autoload": {
