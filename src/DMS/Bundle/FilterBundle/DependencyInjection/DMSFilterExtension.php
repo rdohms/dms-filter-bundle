@@ -27,7 +27,5 @@ class DMSFilterExtension extends Extension
         $loader->load('services.yml');
 
         $container->setParameter('dms_filter.auto_filter_forms', $config['auto_filter_forms']);
-
-        AnnotationRegistry::registerAutoloadNamespace('DMS\Bundle\FilterBundle\Rule', __DIR__ . '/../../../');
     }
 }
