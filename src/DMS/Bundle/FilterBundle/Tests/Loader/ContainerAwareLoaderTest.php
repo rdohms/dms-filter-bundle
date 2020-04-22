@@ -41,7 +41,7 @@ class ContainerAwareLoaderTest extends TestCase
         $this->assertInstanceOf(StripTagsFilter::class, $filter);
     }
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

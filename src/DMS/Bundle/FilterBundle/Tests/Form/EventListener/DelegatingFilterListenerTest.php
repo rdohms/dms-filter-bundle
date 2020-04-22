@@ -48,7 +48,7 @@ class DelegatingFilterListenerTest extends TestCase
      */
     private $params;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         if (!class_exists(Event::class)) {
             $this->markTestSkipped('The "EventDispatcher" component is not available');
