@@ -51,6 +51,6 @@ class ContainerFilter extends BaseFilter implements ContainerAwareInterface
 
         $method = $rule->method;
 
-        return $service->$method($value);
+        return $service->$method($value, $rule->options);
     }
 }

@@ -25,6 +25,11 @@ class Service extends Rule
     public $method;
 
     /**
+     * @var mixed
+     */
+    public $options;
+
+    /**
      * {@inheritdoc}
      */
     public function getRequiredOptions(): array
