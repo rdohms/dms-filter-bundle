@@ -21,7 +21,7 @@ class FormTypeFilterExtensionTest extends TypeTestCase
      */
     protected $autoFilter = true;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $classMetadataFactory = $this->getMockBuilder('DMS\Filter\Mapping\ClassMetadataFactory')
                                      ->disableOriginalConstructor()
@@ -39,7 +39,7 @@ class FormTypeFilterExtensionTest extends TypeTestCase
         parent::setUp();
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->filter = null;
         $this->autoFilter = true;
