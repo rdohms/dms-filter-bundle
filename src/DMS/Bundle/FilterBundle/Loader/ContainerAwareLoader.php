@@ -1,24 +1,21 @@
 <?php
+declare(strict_types=1);
 
 namespace DMS\Bundle\FilterBundle\Loader;
 
 use DMS\Filter\Filters\BaseFilter;
 use DMS\Filter\Filters\Loader\FilterLoader;
 use DMS\Filter\Rules\Rule;
+use stdClass;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use UnexpectedValueException;
 
 class ContainerAwareLoader extends FilterLoader implements ContainerAwareInterface
 {
-    /**
-     * @var ContainerInterface
-     */
-    protected $container;
+    protected ?ContainerInterface $container;
 
-    /**
-     * @param ContainerInterface $container
-     */
-    public function setContainer(ContainerInterface $container = null): void
+    public function setContainer(?ContainerInterface $container = null): void
     {
         $this->container = $container;
     }
@@ -26,15 +23,15 @@ class ContainerAwareLoader extends FilterLoader implements ContainerAwareInterfa
     /**
      * Attempts to load Filter from Container or hands off to parent loader.
      *
-     * @param Rule $rule
-     * @return BaseFilter|null|\stdClass
-     * @throws \UnexpectedValueException
+     * @return BaseFilter|stdClass|null
+     *
+     * @throws UnexpectedValueException
      */
     public function getFilterForRule(Rule $rule)
     {
         $filterIdentifier = $rule->getFilter();
 
-        if ($this->container === null || !$this->container->has($filterIdentifier)) {
+        if ($this->container === null || ! $this->container->has($filterIdentifier)) {
             return parent::getFilterForRule($rule);
         }
 

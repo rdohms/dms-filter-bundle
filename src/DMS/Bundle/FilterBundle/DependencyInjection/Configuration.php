@@ -1,9 +1,13 @@
 <?php
+declare(strict_types=1);
 
 namespace DMS\Bundle\FilterBundle\DependencyInjection;
 
+use RuntimeException;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
+
+use function method_exists;
 
 /**
  * This is the class that validates and merges configuration from your app/config files
@@ -14,11 +18,11 @@ class Configuration implements ConfigurationInterface
 {
     /**
      * {@inheritDoc}
-     * @throws \RuntimeException
+     *
+     * @throws RuntimeException
      */
     public function getConfigTreeBuilder(): TreeBuilder
     {
-
         $treeBuilder = new TreeBuilder('dms_filter');
 
         if (method_exists($treeBuilder, 'getRootNode')) {

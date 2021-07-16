@@ -1,28 +1,22 @@
 <?php
+declare(strict_types=1);
 
 namespace DMS\Bundle\FilterBundle\Service;
 
 use DMS\Filter\FilterInterface;
+use DMS\Filter\Rules\Rule;
 
 /**
  * Filter Service
  *
  * Provides filtering result based on annotation in the class.
- *
- * @package DMS
- * @subpackage Bundle
  */
 class Filter
 {
-
-    /**
-     * @var FilterInterface
-     */
-    private $filterExecutor;
+    private FilterInterface $filterExecutor;
 
     /**
      * Instantiates the Filter Service
-     * @param FilterInterface $filter
      */
     public function __construct(FilterInterface $filter)
     {
@@ -31,21 +25,16 @@ class Filter
 
     /**
      * Filter an object based on its annotations
-     *
-     * @param object $object
      */
-    public function filterEntity($object): void
+    public function filterEntity(object $object): void
     {
         $this->filterExecutor->filterEntity($object);
     }
 
     /**
      * Filters only a selected property of an entity
-     *
-     * @param object $object
-     * @param string $property
      */
-    public function filterProperty($object, $property): void
+    public function filterProperty(object $object, string $property): void
     {
         $this->filterExecutor->filterProperty($object, $property);
     }
@@ -54,8 +43,8 @@ class Filter
      * Runs a given value through one or more filter rules returning the
      * filtered value
      *
-     * @param mixed $value
-     * @param \DMS\Filter\Rules\Rule[]|\DMS\Filter\Rules\Rule $filter
+     * @param mixed       $value
+     * @param Rule[]|Rule $filter
      *
      * @return mixed
      */
@@ -66,8 +55,6 @@ class Filter
 
     /**
      * Retrieve the actual filter executor instance
-     *
-     * @return FilterInterface
      */
     public function getFilterExecutor(): FilterInterface
     {

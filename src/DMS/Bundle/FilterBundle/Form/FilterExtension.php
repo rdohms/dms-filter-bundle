@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace DMS\Bundle\FilterBundle\Form;
 
@@ -13,24 +14,18 @@ use Symfony\Component\Form\AbstractExtension;
  */
 class FilterExtension extends AbstractExtension
 {
-    /**
-     * @var boolean
-     */
-    protected $autoFilter;
-    /**
-     * @var Filter
-     */
-    private $filter;
+    protected bool $autoFilter;
+    private Filter $filter;
 
     /**
      * {@inheritdoc}
      *
-     * @param \DMS\Bundle\FilterBundle\Service\Filter $filterService
-     * @param boolean $autoFilter
+     * @param Filter $filterService
+     * @param bool   $autoFilter
      */
     public function __construct(Filter $filterService, $autoFilter)
     {
-        $this->filter = $filterService;
+        $this->filter     = $filterService;
         $this->autoFilter = $autoFilter;
     }
 
@@ -39,8 +34,8 @@ class FilterExtension extends AbstractExtension
      */
     protected function loadTypeExtensions(): array
     {
-        return array(
+        return [
             new FormTypeFilterExtension($this->filter, $this->autoFilter),
-        );
+        ];
     }
 }
