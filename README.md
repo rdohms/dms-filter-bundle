@@ -154,5 +154,6 @@ Given you have composer, cloned the project repository and have a terminal open 
 
     composer.phar install --prefer-source --dev
     vendor/bin/phpunit
+    vendor/bin/phpcs
 
 The tests should be passing and you are ready to make contributions.
