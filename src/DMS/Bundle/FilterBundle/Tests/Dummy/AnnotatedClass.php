@@ -12,20 +12,20 @@ class AnnotatedClass
      * @Filter\StripTags()
      * @Filter\Alpha()
      */
-    public string $name;
+    public string $name = '';
 
     /**
      * @Filter\StripTags()
      */
-    public string $nickname;
+    public string $nickname = '';
 
     /**
      * @Filter\StripTags("<b><i>")
      */
-    public string $description;
+    public string $description = '';
 
     /**
      * @SfFilter\Service(service="dms.sample", method="filterIt")
      */
-    public string $serviceFiltered;
+    public string $serviceFiltered = '';
 }
