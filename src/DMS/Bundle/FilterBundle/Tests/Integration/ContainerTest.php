@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace DMS\DMS\Bundle\FilterBundle\Tests\Integration;
 
@@ -9,21 +10,18 @@ use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
+use function method_exists;
+
 class ContainerTest extends TestCase
 {
-
     use ProphecyTrait;
 
-    /**
-     * @var ContainerBuilder
-     */
-    private $container;
+    private ContainerBuilder $container;
 
     /**
      * @before
-     * @return void
      */
-    public function buildContainer()
+    public function buildContainer(): void
     {
         $this->container = new ContainerBuilder();
 
@@ -36,7 +34,7 @@ class ContainerTest extends TestCase
         $this->container->compile();
     }
 
-    public function testContainerBoots()
+    public function testContainerBoots(): void
     {
         $this->container->get(Filter::class);
 
@@ -45,6 +43,5 @@ class ContainerTest extends TestCase
         } else {
             self::assertTrue($this->container->isFrozen());
         }
-
     }
 }

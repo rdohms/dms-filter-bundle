@@ -14,7 +14,7 @@
     ],
 
     "require": {
-        "php":  "^7.4",
+        "php":  "^7.4 || ^8.0",
         "dms/dms-filter": "^2.0 | ^3.0",
         "symfony/config": "^5.0",
         "symfony/yaml": "^5.0",
@@ -30,6 +30,7 @@
     "require-dev": {
         "phpunit/phpunit": "^9",
         "phpspec/prophecy-phpunit": "^2.0",
-        "doctrine/annotations": "^1.7"
+        "doctrine/annotations": "^1.13",
+        "dms/coding-standard":"^8"
     }
 }

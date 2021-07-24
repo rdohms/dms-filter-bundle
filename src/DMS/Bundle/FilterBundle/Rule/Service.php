@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace DMS\Bundle\FilterBundle\Rule;
 
@@ -8,33 +9,22 @@ use DMS\Filter\Rules\Rule;
 /**
  * Service Rule
  *
- * @package DMS\Bundle\FilterBundle\Rule
- *
  * @Annotation
  */
 class Service extends Rule
 {
-    /**
-     * @var string
-     */
-    public $service;
+    public string $service;
 
-    /**
-     * @var string
-     */
-    public $method;
+    public string $method;
 
     /**
      * {@inheritdoc}
      */
     public function getRequiredOptions(): array
     {
-        return array('service', 'method');
+        return ['service', 'method'];
     }
 
-    /**
-     * @return string
-     */
     public function getFilter(): string
     {
         return ContainerFilter::class;
