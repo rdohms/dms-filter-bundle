@@ -8,7 +8,6 @@ use DMS\Filter\Filters\StripTags as StripTagsFilter;
 use DMS\Filter\Rules\StripTags;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use stdClass;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class ContainerAwareLoaderTest extends TestCase
@@ -20,11 +19,11 @@ class ContainerAwareLoaderTest extends TestCase
     public function testGetFilterForRule(): void
     {
         $this->container->expects($this->once())->method('has')->will($this->returnValue(true));
-        $this->container->expects($this->once())->method('get')->will($this->returnValue(new stdClass()));
+        $this->container->expects($this->once())->method('get')->will($this->returnValue(new StripTagsFilter()));
 
         $filter = $this->loader->getFilterForRule(new StripTags());
 
-        $this->assertInstanceOf(stdClass::class, $filter);
+        $this->assertInstanceOf(StripTagsFilter::class, $filter);
     }
 
     public function testGetFilterForRuleCascade(): void
