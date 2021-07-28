@@ -4,33 +4,35 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e300f42dd1d7f83e0aadc6e6b24b288b",
+    "content-hash": "29858366224ae32313a06f68301ff3f5",
     "packages": [
         {
             "name": "dms/dms-filter",
-            "version": "v3.0.0",
+            "version": "v4.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rdohms/dms-filter.git",
-                "reference": "3eb0942a68fa023e0d7378fa825447e7a47219b1"
+                "reference": "7d757501986da13126fb7ca34c5fa327bc675bd5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rdohms/dms-filter/zipball/3eb0942a68fa023e0d7378fa825447e7a47219b1",
-                "reference": "3eb0942a68fa023e0d7378fa825447e7a47219b1",
+                "url": "https://api.github.com/repos/rdohms/dms-filter/zipball/7d757501986da13126fb7ca34c5fa327bc675bd5",
+                "reference": "7d757501986da13126fb7ca34c5fa327bc675bd5",
                 "shasum": ""
             },
             "require": {
-                "doctrine/annotations": "~1.1",
-                "php": "^5.3.2 || ^7.0"
+                "doctrine/annotations": "^1.13",
+                "php": "^7.4 || ^8.0"
             },
             "require-dev": {
+                "dms/coding-standard": "^8.0",
                 "doctrine/cache": "~1.3",
-                "phpunit/phpunit": "~3.7",
-                "zendframework/zend-filter": "^2.0.3"
+                "laminas/laminas-filter": "^2.9",
+                "phpunit/phpunit": "^9"
             },
             "suggest": {
-                "zendframework/zend-filter": "Use Zend Filters via DMS Filter"
+                "ext-mbstring": "for encoding safety",
+                "laminas/laminas-filter": "Use Laminas Filters via DMS Filter"
             },
             "type": "library",
             "autoload": {
@@ -59,9 +61,9 @@
             ],
             "support": {
                 "issues": "https://github.com/rdohms/dms-filter/issues",
-                "source": "https://github.com/rdohms/dms-filter/tree/master"
+                "source": "https://github.com/rdohms/dms-filter/tree/v4.0.0"
             },
-            "time": "2016-03-01T09:56:31+00:00"
+            "time": "2021-07-28T10:31:57+00:00"
         },
         {
             "name": "doctrine/annotations",
