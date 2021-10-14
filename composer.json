@@ -31,6 +31,6 @@
         "phpunit/phpunit": "^9",
         "phpspec/prophecy-phpunit": "^2.0",
         "doctrine/annotations": "^1.13",
-        "dms/coding-standard":"^8"
+        "dms/coding-standard":"^9"
     }
 }
