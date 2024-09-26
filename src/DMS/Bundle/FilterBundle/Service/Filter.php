@@ -9,7 +9,7 @@ use DMS\Filter\Rules\Rule;
 /**
  * Filter Service
  *
- * Provides filtering result based on annotation in the class.
+ * Provides filtering result based on attribute in the class.
  */
 class Filter
 {
@@ -24,7 +24,7 @@ class Filter
     }
 
     /**
-     * Filter an object based on its annotations
+     * Filter an object based on its attributes
      */
     public function filterEntity(object $object): void
     {
