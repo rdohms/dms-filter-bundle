@@ -17,7 +17,7 @@ jobs:
 
     strategy:
       matrix:
-        php: [7.4, 8.0]
+        php: [8.2, 8.3]
         dependency-version: [prefer-lowest, prefer-stable]
 
     name: P${{ matrix.php }} - ${{ matrix.dependency-version }}
@@ -30,7 +30,7 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
-          coverage: none
+          coverage: pcov
           tools: composer
 
       - name: Install dependencies

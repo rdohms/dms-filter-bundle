@@ -25,8 +25,8 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: 7.4
-          coverage: none
+          php-version: 8.2
+          coverage: pcov
           tools: composer, cs2pr
 
       - name: Install dependencies
