@@ -16,7 +16,7 @@ Option A) Use Composer.
 
 Add this to your `AppKernel.php`
 
-    new DMS\Bundle\FilterBundle\DMSFilterBundle(),
+    DMS\Bundle\FilterBundle\DMSFilterBundle::class => ['all' => true]
 
 ### 3. Configure
 
@@ -31,58 +31,47 @@ This is the default behaviour, if you want to disable it add this to your `confi
 
 ### Adding Annotations
 
-To add annotations to your entity, import the namespace and add them like this:
+To add attributes to your entity, import the namespace and add them like this:
 
 ```php
 <?php
 
 namespace App\Entity;
 
-//Import Annotations
+//Import Attributes
 use DMS\Filter\Rules as Filter;
 
 class User
 {
+    #[Filter\StripTags]
+    #[Filter\Trim]
+    #[Filter\StripNewlines]
+    public string $name;
 
-    /**
-    * @Filter\StripTags()
-    * @Filter\Trim()
-    * @Filter\StripNewlines()
-    *
-    * @var string
-    */
-    public $name;
-
-    /**
-    * @Filter\StripTags()
-    * @Filter\Trim()
-    * @Filter\StripNewlines()
-    *
-    * @var string
-    */
-    public $email;
-
+    #[Filter\StripTags]
+    #[Filter\Trim]
+    #[Filter\StripNewlines]
+    public string $email;
 }
 ```
 ### Manual Filtering
 
-Use the `dms.filter` service along with annotations in the Entity to filter data.
+Use the `dms.filter.inner.filter` service along with attributes in the Entity to filter data.
 
 ```php
-public function indexAction()
-{
+    public function userAction(#[Autowire(service: 'dms.filter.inner.filter')] Filter $filter): Response
+    {
+        $user = new User();
+        $user->setName("My <b>name</b>");
+        $user->setEmail(" email@mail.com");
 
-    $entity = new \Acme\DemoBundle\Entity\SampleEntity();
-    $entity->name = "My <b>name</b>";
-    $entity->email = " email@mail.com";
+        //Get a Filter
+        $newUser = $filter->filterEntity($car);
 
-    $oldEntity = clone $entity;
-
-    $filterService = $this->get('dms.filter');
-    $filterService->filterEntity($entity);
-
-    return array('entity' => $entity, "old" => $oldEntity);
-}
+        return new Response(
+            $newUser->getModel()
+        );
+    }
 ```
 
 ### Auto filtering
@@ -123,7 +112,7 @@ See below the usage example of the annotation, it takes 2 options: `service` and
 
 namespace App\Entity;
 
-//Import Annotations
+//Import Atributes
 use DMS\Filter\Rules as Filter;
 
 //Import Symfony Rules
@@ -131,12 +120,8 @@ use DMS\Bundle\FilterBundle\Rule as SfFilter;
 
 class User
 {
-    /**
-    * @Filter\StripTags()
-    * @SfFilter\Service(service="dms.sample", method="filterIt")
-    *
-    * @var string
-    */
+    #[Filter\StripTags]
+    #[SfFilter\Service(service: 'dms.sample', method: 'filterIt')]
     public $name;
 }
 ```
@@ -145,8 +130,7 @@ The `filterIt` method can have any name, but it must take one paramter (the valu
 
 ## Compatibility
 
-This is compatible with Symfony 2.8 and above, including 3.0.
-For Symfony 2.3+ support use "^2.0".
+This is compatible with Symfony 6.4 and above and PHP 8.2 and above
 
 ## Contributing
 
