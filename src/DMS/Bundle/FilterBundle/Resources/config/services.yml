@@ -1,5 +1,5 @@
 parameters:
-    dms.filter.mapping.loader.class: DMS\Filter\Mapping\Loader\AnnotationLoader
+    dms.filter.mapping.loader.class: DMS\Filter\Mapping\Loader\AttributeLoader
     dms.filter.mapping.factory.class: DMS\Filter\Mapping\ClassMetadataFactory
     dms.filter.inner.filter.class: DMS\Filter\Filter
 
@@ -25,8 +25,6 @@ services:
     dms.filter.mapping.loader:
         class: '%dms.filter.mapping.loader.class%'
         public: true
-        arguments:
-            - '@annotation_reader'
 
     dms.filter.mapping.factory:
         class: '%dms.filter.mapping.factory.class%'
