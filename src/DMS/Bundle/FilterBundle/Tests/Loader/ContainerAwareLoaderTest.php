@@ -18,8 +18,8 @@ class ContainerAwareLoaderTest extends TestCase
 
     public function testGetFilterForRule(): void
     {
-        $this->container->expects($this->once())->method('has')->will($this->returnValue(true));
-        $this->container->expects($this->once())->method('get')->will($this->returnValue(new StripTagsFilter()));
+        $this->container->expects($this->once())->method('has')->willReturn(true);
+        $this->container->expects($this->once())->method('get')->willReturn(new StripTagsFilter());
 
         $filter = $this->loader->getFilterForRule(new StripTags());
 
@@ -28,7 +28,7 @@ class ContainerAwareLoaderTest extends TestCase
 
     public function testGetFilterForRuleCascade(): void
     {
-        $this->container->expects($this->once())->method('has')->will($this->returnValue(false));
+        $this->container->expects($this->once())->method('has')->willReturn(false);
         $this->container->expects($this->never())->method('get');
 
         $filter = $this->loader->getFilterForRule(new StripTags());

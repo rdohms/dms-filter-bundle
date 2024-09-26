@@ -5,7 +5,7 @@ namespace DMS\Bundle\FilterBundle\Tests\Form\Type;
 
 use DMS\Bundle\FilterBundle\Form\FilterExtension;
 use DMS\Bundle\FilterBundle\Service\Filter;
-use DMS\Bundle\FilterBundle\Tests\Dummy\AnnotatedClass;
+use DMS\Bundle\FilterBundle\Tests\Dummy\AttributedClass;
 use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Form;
@@ -102,7 +102,7 @@ class FormTypeFilterExtensionTest extends TypeTestCase
 
     public function testBindValidatesData(): void
     {
-        $entity  = new AnnotatedClass();
+        $entity  = new AttributedClass();
         $builder = $this->factory->createBuilder(FormType::class, $entity);
         $builder->add('name', FormType::class);
         $form = $builder->getForm();
