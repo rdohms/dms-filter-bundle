@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace DMS\Bundle\FilterBundle\Rule;
@@ -16,7 +17,7 @@ class Service extends Rule
     public function __construct(
         public string $service,
         public string $method
-    ){
+    ) {
     }
 
     public function getFilter(): string

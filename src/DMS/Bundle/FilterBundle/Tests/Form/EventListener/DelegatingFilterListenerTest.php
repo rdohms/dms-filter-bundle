@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace DMS\Bundle\FilterBundle\Tests\Form\EventListener;
@@ -16,8 +17,8 @@ use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\PropertyAccess\PropertyPath;
-
 use Symfony\Contracts\EventDispatcher\Event;
+
 use function class_exists;
 
 class DelegatingFilterListenerTest extends TestCase
