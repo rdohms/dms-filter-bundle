@@ -1,19 +1,18 @@
 <?php
+
 declare(strict_types=1);
 
 namespace DMS\Bundle\FilterBundle\Filter;
 
-use DMS\Bundle\FilterBundle\Rule\Service;
 use DMS\Filter\Filters\BaseFilter;
 use DMS\Filter\Rules\Rule;
 use RuntimeException;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 use function is_callable;
 use function sprintf;
 
-class ContainerFilter extends BaseFilter implements ContainerAwareInterface
+class ContainerFilter extends BaseFilter
 {
     protected ?ContainerInterface $container;
 
@@ -31,17 +30,16 @@ class ContainerFilter extends BaseFilter implements ContainerAwareInterface
      * Enforces the desired filtering on the the value
      * returning a filtered value.
      *
-     * @param Service|Rule $rule
-     * @param mixed        $value
+     * @param Rule $rule
+     * @param mixed $value
      *
      * @return mixed
      *
-     * @throws RuntimeException
      */
-    public function apply(Rule $rule, $value)
+    public function apply(Rule $rule, mixed $value): mixed
     {
         if ($this->container === null) {
-            return;
+            throw new RuntimeException("The container is unavailable");
         }
 
         if (! $this->container->has($rule->service)) {

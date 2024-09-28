@@ -1,14 +1,14 @@
 <?php
+
 declare(strict_types=1);
 
 namespace DMS\Bundle\FilterBundle\Tests\Form\EventListener;
 
 use DMS\Bundle\FilterBundle\Form\EventListener\DelegatingFilterListener;
 use DMS\Bundle\FilterBundle\Service\Filter;
-use DMS\Bundle\FilterBundle\Tests\Dummy\AnnotatedClass;
+use DMS\Bundle\FilterBundle\Tests\Dummy\AttributedClass;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormBuilder;
 use Symfony\Component\Form\FormConfigInterface;
@@ -17,6 +17,7 @@ use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\PropertyAccess\PropertyPath;
+use Symfony\Contracts\EventDispatcher\Event;
 
 use function class_exists;
 
@@ -101,26 +102,26 @@ class DelegatingFilterListenerTest extends TestCase
 
         $form->expects($this->exactly(2))
             ->method('isRoot')
-            ->will($this->returnValue(false));
+            ->willReturn(false);
 
         $form->expects($this->once())
             ->method('getParent')
-            ->will($this->returnValue($parentForm));
+            ->willReturn($parentForm);
 
         $form->expects($this->never())
             ->method('getData');
 
         $parentForm->expects($this->once())
             ->method('isRoot')
-            ->will($this->returnValue(true));
+            ->willReturn(true);
 
         $parentForm->expects($this->once())
             ->method('getConfig')
-            ->will($this->returnValue($config));
+            ->willReturn($config);
 
         $config->expects($this->once())
             ->method('getOption')
-            ->will($this->returnValue(false));
+            ->willReturn(false);
 
         $this->delegate->expects($this->never())
             ->method('filterEntity');
@@ -130,7 +131,7 @@ class DelegatingFilterListenerTest extends TestCase
 
     public function testFilterFiltersNonRootWithCascadeOn(): void
     {
-        $entity     = new AnnotatedClass();
+        $entity     = new AttributedClass();
         $form       = $this->getMockForm();
         $parentForm = $this->getMockForm();
         $config     = $this->getMockBuilder(FormConfigInterface::class)
@@ -138,27 +139,27 @@ class DelegatingFilterListenerTest extends TestCase
 
         $form->expects($this->exactly(2))
             ->method('isRoot')
-            ->will($this->returnValue(false));
+            ->willReturn(false);
 
         $form->expects($this->once())
             ->method('getParent')
-            ->will($this->returnValue($parentForm));
+            ->willReturn($parentForm);
 
         $form->expects($this->once())
             ->method('getData')
-            ->will($this->returnValue($entity));
+            ->willReturn($entity);
 
         $parentForm->expects($this->once())
             ->method('isRoot')
-            ->will($this->returnValue(true));
+            ->willReturn(true);
 
         $parentForm->expects($this->once())
             ->method('getConfig')
-            ->will($this->returnValue($config));
+            ->willReturn($config);
 
         $config->expects($this->once())
             ->method('getOption')
-            ->will($this->returnValue(true));
+            ->willReturn(true);
 
         $this->delegate->expects($this->once())
             ->method('filterEntity');
@@ -172,11 +173,11 @@ class DelegatingFilterListenerTest extends TestCase
 
         $form->expects($this->once())
             ->method('isRoot')
-            ->will($this->returnValue(true));
+            ->willReturn(true);
 
         $form->expects($this->once())
             ->method('getData')
-            ->will($this->returnValue([1, 2, 3]));
+            ->willReturn([1, 2, 3]);
 
         $this->delegate->expects($this->never())
             ->method('filterEntity');
@@ -186,16 +187,16 @@ class DelegatingFilterListenerTest extends TestCase
 
     public function testFilterOnPostBind(): void
     {
-        $entity = new AnnotatedClass();
+        $entity = new AttributedClass();
         $form   = $this->getMockForm();
 
         $form->expects($this->once())
             ->method('isRoot')
-            ->will($this->returnValue(true));
+            ->willReturn(true);
 
         $form->expects($this->once())
             ->method('getData')
-            ->will($this->returnValue($entity));
+            ->willReturn($entity);
 
         $this->delegate->expects($this->once())
             ->method('filterEntity');

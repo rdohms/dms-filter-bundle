@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace DMS\Bundle\FilterBundle\Tests\Dummy;
@@ -6,26 +7,18 @@ namespace DMS\Bundle\FilterBundle\Tests\Dummy;
 use DMS\Bundle\FilterBundle\Rule as SfFilter;
 use DMS\Filter\Rules as Filter;
 
-class AnnotatedClass
+class AttributedClass
 {
-    /**
-     * @Filter\StripTags()
-     * @Filter\Alpha()
-     */
+    #[Filter\StripTags]
+    #[Filter\Alpha]
     public string $name = '';
 
-    /**
-     * @Filter\StripTags()
-     */
+    #[Filter\StripTags]
     public string $nickname = '';
 
-    /**
-     * @Filter\StripTags("<b><i>")
-     */
+    #[Filter\StripTags(allowed: '<b><i>')]
     public string $description = '';
 
-    /**
-     * @SfFilter\Service(service="dms.sample", method="filterIt")
-     */
+    #[SfFilter\Service(service: 'dms.sample', method: 'filterIt')]
     public string $serviceFiltered = '';
 }
