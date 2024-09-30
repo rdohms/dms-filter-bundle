@@ -14,7 +14,7 @@ Option A) Use Composer.
 
 ### 2. Enable Bundle
 
-Add this to your `AppKernel.php`
+Add this to your `config/bundles.php`
 
     DMS\Bundle\FilterBundle\DMSFilterBundle::class => ['all' => true]
 
